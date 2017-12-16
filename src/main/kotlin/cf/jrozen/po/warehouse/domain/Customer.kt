@@ -6,12 +6,11 @@ import javax.persistence.*
 @Entity
 class Customer(
         @Id
-        @Column(name = "CUSTOMER_ID")
         val customerId: String,
-        @Column(name = "NAME")
+        @Column(nullable = false)
         val name: String,
-        @Column(name = "CREATION_DATE")
-        val creationDate: LocalDateTime,
+        @Column(nullable = false)
+        val creationDate: LocalDateTime = LocalDateTime.now(),
         @OneToMany
         val orders: MutableList<Order> = ArrayList()
 ) {

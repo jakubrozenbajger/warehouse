@@ -4,7 +4,7 @@ import javax.persistence.Entity
 import javax.persistence.Id
 
 @Entity
-class Order(
+class Address(
         @Id
-        val orderId: String
-)
+        val addressId: String) {
+}
