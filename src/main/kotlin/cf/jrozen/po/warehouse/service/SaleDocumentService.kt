@@ -14,11 +14,29 @@ import org.springframework.transaction.annotation.Transactional
 class SaleDocumentService(
         @Qualifier("fsRepo")
         val documentRepository: DocumentRepository,
-        val saleDocumentRepository: SaleDocumentRepository
+        val saleDocumentRepository: SaleDocumentRepository,
+        val saleDocumentBuilderFactory: SaleDocumentBuilderFactory,
+        val authService: AuthService
 ) {
 
     fun generateNewSaleDocument(order: Order, saleDocumentRequest: SaleDocumentRequest): SaleDocument {
-        TODO()
+        val builder: AbstractSaleDocumentBuilder = saleDocumentBuilderFactory.getBuilder(saleDocumentRequest)
+        val saleDocument: SaleDocument =
+                builder.fromOrder(order)
+                        .withCreator(authService.getCurrentUser())
+                        .build()
+        saleDocumentRepository.save(saleDocument)
+
+        processDocument(saleDocument)
+
+        return saleDocument;
+    }
+
+    private fun processDocument(saleDocument: SaleDocument) {
+
+
+//        documentRepository.saveDocument()
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
 }
