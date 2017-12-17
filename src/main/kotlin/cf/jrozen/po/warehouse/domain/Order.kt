@@ -25,9 +25,16 @@ class Order(
 
         @OneToMany
         @JoinColumn
-        var orderPosition: MutableSet<OrderPosition> = HashSet()
+        var orderPosition: MutableSet<OrderPosition> = HashSet(),
 
-)
+        @Enumerated(value = EnumType.STRING)
+        var documentState: DocumentState = DocumentState.NEW
+
+) {
+    fun canGenerateSaleDocument(): Boolean {
+        return DocumentState.CLOSED != this.documentState
+    }
+}
 
 @Entity
 @Table(name = "order_positions")

@@ -50,11 +50,18 @@ abstract class SaleDocument(
                         referencedColumnName = "sale_document_uuid")),
                 inverseJoinColumns = arrayOf(JoinColumn(name = "dealer_email",
                         referencedColumnName = "email")))
-        val supervisorDealers: MutableList<Dealer> = ArrayList()
+        val supervisorDealers: MutableList<Dealer> = ArrayList(),
+
+        @Enumerated
+        var documentState: DocumentState = DocumentState.NEW
 )
 
+enum class SaleDocumentType {
+    INVOICE, RECEIPT
+}
+
 @Entity
-@DiscriminatorValue(value = "Receipt")
+@DiscriminatorValue(value = "RECEIPT")
 class Receipt(
         saleDocumentId: String = randomUUID(),
         creationDate: LocalDateTime,
@@ -81,7 +88,7 @@ class Receipt(
 }
 
 @Entity
-@DiscriminatorValue(value = "Invoice")
+@DiscriminatorValue(value = "INVOICE")
 class Invoice(
         saleDocumentId: String = randomUUID(),
         creationDate: LocalDateTime,

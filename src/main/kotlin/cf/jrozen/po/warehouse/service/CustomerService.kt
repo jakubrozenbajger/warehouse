@@ -3,12 +3,16 @@ package cf.jrozen.po.warehouse.service
 import cf.jrozen.po.warehouse.domain.Customer
 import cf.jrozen.po.warehouse.repository.CustomerRepository
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
+
 
 @Service
+@Transactional(readOnly = false)
 class CustomerService(val customerRepository: CustomerRepository) {
 
     fun saveCustomer(customer: Customer): Customer = customerRepository.save(customer)
 
+    @Transactional(readOnly = true)
     fun getCustomer(customerId: String): Customer = customerRepository.getOne(customerId)
 
     fun deleteCustomer(customerId: String): Customer {
@@ -18,5 +22,7 @@ class CustomerService(val customerRepository: CustomerRepository) {
         else throw IllegalArgumentException()
         return customer
     }
+
+    fun getAllCustomers(): List<Customer> = customerRepository.findAll()
 
 }

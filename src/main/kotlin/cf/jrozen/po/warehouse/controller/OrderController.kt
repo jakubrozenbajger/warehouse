@@ -1,17 +1,16 @@
 package cf.jrozen.po.warehouse.controller
 
 import cf.jrozen.po.warehouse.domain.Order
+import cf.jrozen.po.warehouse.domain.SaleDocumentType
 import cf.jrozen.po.warehouse.service.OrderService
-import org.springframework.stereotype.Controller
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.PutMapping
-import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.*
+import java.time.LocalDateTime
 
-@Controller("/orders")
+@RestController
+@RequestMapping("/orders")
 class OrderController(val orderService: OrderService) {
 
-    @GetMapping
+    @GetMapping("/")
     fun getOrders(): MutableList<Order> = orderService.getAllOrders()
 
     @GetMapping("/{orderId}")
@@ -22,4 +21,16 @@ class OrderController(val orderService: OrderService) {
     fun updateOrder(@RequestBody orderId: Order): Order =
             orderService.updateOrder(orderId)
 
+    @PostMapping("/{orderId}/sale-document")
+    fun generateSaleDocument(
+            @PathVariable("orderId", required = true) orderId: String,
+            @RequestBody saleDocumentRequest: SaleDocumentRequest): Order {
+        return orderService.createSaleDocument(orderId, saleDocumentRequest)
+    }
 }
+
+class SaleDocumentRequest(
+        val type: SaleDocumentType,
+        val paymentDate: LocalDateTime,
+        val creationDate: LocalDateTime?
+)
