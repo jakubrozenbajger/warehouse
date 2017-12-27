@@ -12,7 +12,6 @@ import org.springframework.transaction.annotation.Transactional
 @Service
 @Transactional(readOnly = false)
 class SaleDocumentService(
-        @Qualifier("fsRepo")
         val documentRepository: DocumentRepository,
         val saleDocumentRepository: SaleDocumentRepository,
         val saleDocumentBuilderFactory: SaleDocumentBuilderFactory,
@@ -29,7 +28,7 @@ class SaleDocumentService(
 
         processDocument(saleDocument)
 
-        return saleDocument;
+        return saleDocument
     }
 
     private fun processDocument(saleDocument: SaleDocument) {

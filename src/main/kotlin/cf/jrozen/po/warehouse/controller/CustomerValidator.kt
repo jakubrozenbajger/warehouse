@@ -7,8 +7,10 @@ import org.springframework.validation.Validator
 
 @Component
 class CustomerValidator : Validator {
+
     override fun validate(target: Any?, errors: Errors?) {
-        if (target != null && target is Customer) {
+        if (target != null && errors!= null && target is Customer) {
+            errors.reject("NULL_EMAIL")
         }
     }
 

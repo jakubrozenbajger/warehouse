@@ -8,13 +8,11 @@ import java.util.logging.Logger
 
 abstract class DocumentRepository {
 
-    val logger = Logger.getLogger(this::class::simpleName.name)
+    val logger: Logger = Logger.getLogger(this.javaClass.simpleName)
 
     abstract fun saveDocument(sd: Any)
 }
 
-@Repository
-@Qualifier("s3repo")
 class S3DocumentRepository : DocumentRepository() {
 
     override fun saveDocument(sd: Any) {
@@ -22,8 +20,6 @@ class S3DocumentRepository : DocumentRepository() {
     }
 }
 
-@Component
-@Qualifier("fsRepo")
 class FileSystemDocumentRepository : DocumentRepository() {
     override fun saveDocument(sd: Any) {
         logger.info("Saving document to file system repository")

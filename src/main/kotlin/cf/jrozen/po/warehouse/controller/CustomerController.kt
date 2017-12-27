@@ -2,6 +2,7 @@ package cf.jrozen.po.warehouse.controller
 
 import cf.jrozen.po.warehouse.domain.Customer
 import cf.jrozen.po.warehouse.service.CustomerService
+import org.springframework.http.ResponseEntity
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.bind.WebDataBinder

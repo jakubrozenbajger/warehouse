@@ -38,7 +38,7 @@ class Customer(
 ) {
 
     fun canBeDeleted(): Boolean {
-        return orders.isEmpty()
+        return orders.isEmpty() && saleDocuments.isEmpty()
     }
 
 }
