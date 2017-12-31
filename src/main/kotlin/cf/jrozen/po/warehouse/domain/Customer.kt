@@ -26,6 +26,9 @@ class Customer(
         @Column(nullable = true)
         var phoneNumber: String?,
 
+        @Column(name = "nip")
+        val nip: String?,
+
         @OneToOne(targetEntity = Address::class)
         @JoinColumn(name = "address_uuid", referencedColumnName = "address_uuid")
         val address: Address,

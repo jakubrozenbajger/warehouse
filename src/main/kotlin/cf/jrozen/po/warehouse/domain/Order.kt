@@ -4,6 +4,8 @@ import cf.jrozen.po.warehouse.utils.randomUUID
 import java.math.BigDecimal
 import java.time.LocalDateTime
 import javax.persistence.*
+import javax.validation.constraints.Max
+import javax.validation.constraints.Min
 
 @Entity
 @Table(name = "orders")
@@ -61,7 +63,7 @@ class Rabat(
         @Column(name = "rabat_uuid")
         val uuid: String = randomUUID(),
 
-        @OneToOne(cascade = arrayOf(CascadeType.ALL), fetch = FetchType.LAZY, optional = false)
+        @OneToOne(cascade = [(CascadeType.ALL)], fetch = FetchType.LAZY, optional = false)
         @JoinColumn(name = "order_position_uuid")
         val order: OrderPosition,
 
@@ -106,15 +108,30 @@ class TaxGroup(
         @Id
         @Column(name = "name")
         val name: String,
+
         @Column(name = "tax_amount")
         val taxAmount: BigDecimal
-)
+){
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is TaxGroup) return false
+
+        if (name != other.name) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        return name.hashCode()
+    }
+}
+
 
 @Embeddable
 class Dimension(
-        val height: BigDecimal?,
-        val width: BigDecimal?,
-        val depth: BigDecimal?
+        val height: Double?,
+        val width: Double?,
+        val depth: Double?
 )
 
 @Embeddable

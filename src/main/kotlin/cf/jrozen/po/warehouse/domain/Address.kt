@@ -1,6 +1,7 @@
 package cf.jrozen.po.warehouse.domain
 
 import cf.jrozen.po.warehouse.utils.randomUUID
+import java.util.*
 import javax.persistence.Column
 import javax.persistence.Entity
 import javax.persistence.Id
@@ -17,6 +18,9 @@ class Address(
         @Column(name = "city")
         val city: String,
 
+        @Column(name = "zip_code")
+        val zipCode: String,
+
         @Column(name = "street")
         val street: String,
 
@@ -24,4 +28,11 @@ class Address(
         val localNumber: String
 
 ) {
+    fun asString(): String {
+        val sj = StringJoiner(", ")
+        sj.add("$street $localNumber")
+        sj.add("$city $zipCode")
+        sj.add(country)
+        return sj.toString()
+    }
 }

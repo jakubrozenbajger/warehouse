@@ -1,9 +1,11 @@
 package cf.jrozen.po.warehouse.service
 
 import cf.jrozen.po.warehouse.controller.SaleDocumentRequest
-import cf.jrozen.po.warehouse.domain.Order
-import cf.jrozen.po.warehouse.domain.SaleDocument
-import cf.jrozen.po.warehouse.domain.User
+import cf.jrozen.po.warehouse.domain.*
+import cf.jrozen.po.warehouse.utils.randomUUID
+import java.time.LocalDateTime
+import java.util.*
+import kotlin.collections.ArrayList
 
 interface SaleDocumentBuilder {
     fun build(): SaleDocument
@@ -11,39 +13,75 @@ interface SaleDocumentBuilder {
 
 
 abstract class AbstractSaleDocumentBuilder(
+        val companyService: CompanyService,
         val saleDocumentRequest: SaleDocumentRequest
 ) : SaleDocumentBuilder {
-    lateinit var creator: User
 
-    abstract fun fromOrder(order: Order): AbstractSaleDocumentBuilder
+    lateinit var dealer: Dealer
+    lateinit var order: Order
 
-    fun withCreator(user: User): AbstractSaleDocumentBuilder {
-        this.creator = user
+    open fun fromOrder(order: Order): AbstractSaleDocumentBuilder {
+        this.order = order
         return this
+    }
+
+    fun withCreator(dealer: Dealer): AbstractSaleDocumentBuilder {
+        this.dealer = dealer
+        return this
+    }
+
+    fun getInfoAsString(customer: Customer): String {
+        val sj = StringJoiner(", ")
+        sj.add(customer.name)
+        customer.nip?.let { sj.add(it) }
+        sj.add(customer.address.asString())
+        sj.add(customer.phoneNumber)
+        return sj.toString()
     }
 }
 
-class InvoiceBuilder(saleDocumentRequest: SaleDocumentRequest) : AbstractSaleDocumentBuilder(saleDocumentRequest) {
-
-    override fun fromOrder(order: Order): InvoiceBuilder {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+class InvoiceBuilder(
+        companyService: CompanyService,
+        private val saleDocumentService: SaleDocumentService,
+        saleDocumentRequest: SaleDocumentRequest
+) : AbstractSaleDocumentBuilder(companyService, saleDocumentRequest) {
 
     override fun build(): SaleDocument {
-        TODO("not implemented")
+        return Invoice(
+                randomUUID(),
+                saleDocumentRequest.creationDate ?: LocalDateTime.now(),
+                saleDocumentRequest.paymentDate,
+                companyService.getSellerInfo(),
+                getInfoAsString(order.customer),
+                order.customer.address,
+                order,
+                order.customer,
+                dealer,
+                ArrayList(),
+                saleDocumentService.nextSerialNumber()
+        )
     }
+
 }
 
 class ReceiptBuilder(
+        companyService: CompanyService,
         saleDocumentRequest: SaleDocumentRequest
-) : AbstractSaleDocumentBuilder(saleDocumentRequest) {
-
-    override fun fromOrder(order: Order): ReceiptBuilder {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+) : AbstractSaleDocumentBuilder(companyService, saleDocumentRequest) {
 
     override fun build(): SaleDocument {
-        TODO("not implemented")
+        return Receipt(
+                randomUUID(),
+                saleDocumentRequest.creationDate ?: LocalDateTime.now(),
+                saleDocumentRequest.paymentDate,
+                companyService.getSellerInfo(),
+                getInfoAsString(order.customer),
+                order.customer.address,
+                order,
+                order.customer,
+                dealer,
+                ArrayList()
+        )
     }
 
 }

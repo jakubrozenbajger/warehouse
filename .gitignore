@@ -146,7 +146,7 @@ local.properties
 # CDT-specific (C/C++ Development Tooling)
 .cproject
 
-# Java annotation processor (APT)
+# Java annotation processingStrategy (APT)
 
 # PDT-specific (PHP Development Tools)
 .buildpath

@@ -12,7 +12,7 @@ abstract class SaleDocument(
 
         @Id
         @Column(name = "sale_document_uuid")
-        val saleDocumentId: String = randomUUID(),
+        private val saleDocumentId: String = randomUUID(),
 
         @Column(nullable = false)
         val creationDate: LocalDateTime = LocalDateTime.now(),
@@ -32,29 +32,42 @@ abstract class SaleDocument(
         @JoinColumn(name = "customer_address", referencedColumnName = "address_uuid")
         val address: Address,
 
-        @OneToOne(cascade = arrayOf(CascadeType.ALL))
+        @OneToOne(cascade = [(CascadeType.ALL)])
         @JoinColumn(name = "order_uuid")
         val order: Order,
 
-        @ManyToOne(cascade = arrayOf(CascadeType.ALL))
+        @ManyToOne(cascade = [(CascadeType.ALL)])
         @JoinColumn(name = "customer_uuid", referencedColumnName = "customer_uuid")
         val customer: Customer,
 
-        @ManyToOne(cascade = arrayOf(CascadeType.ALL))
+        @ManyToOne(cascade = [(CascadeType.ALL)])
         @JoinColumn(name = "dealer_email", referencedColumnName = "email")
         val seller: Dealer,
 
-        @ManyToMany(cascade = arrayOf(CascadeType.ALL))
+        @ManyToMany(cascade = [(CascadeType.ALL)])
         @JoinTable(name = "sale_documents_supervisors",
-                joinColumns = arrayOf(JoinColumn(name = "sale_document_uuid",
-                        referencedColumnName = "sale_document_uuid")),
-                inverseJoinColumns = arrayOf(JoinColumn(name = "dealer_email",
-                        referencedColumnName = "email")))
+                joinColumns = [(JoinColumn(name = "sale_document_uuid",
+                        referencedColumnName = "sale_document_uuid"))],
+                inverseJoinColumns = [(JoinColumn(name = "dealer_email",
+                        referencedColumnName = "email"))])
         val supervisorDealers: MutableList<Dealer> = ArrayList(),
 
         @Enumerated
         var documentState: DocumentState = DocumentState.NEW
-)
+) {
+        override fun equals(other: Any?): Boolean {
+                if (this === other) return true
+                if (other !is SaleDocument) return false
+
+                if (saleDocumentId != other.saleDocumentId) return false
+
+                return true
+        }
+
+        override fun hashCode(): Int {
+                return saleDocumentId.hashCode()
+        }
+}
 
 enum class SaleDocumentType {
     INVOICE, RECEIPT
