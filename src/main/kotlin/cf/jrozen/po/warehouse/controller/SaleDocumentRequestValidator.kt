@@ -9,17 +9,21 @@ import java.time.LocalDateTime
 
 @Component
 class SaleDocumentRequestValidator : Validator {
-    override fun validate(target: Any?, errors: Errors?) {
-        if (target != null && target is SaleDocumentRequest) {
-            if (target.creationDate?.isBefore(target.paymentDate) ?:
-                    !target.paymentDate.isAfter(LocalDateTime.now()))
+
+    override fun supports(clazz: Class<*>?): Boolean {
+        return clazz?.isAssignableFrom(SaleDocumentRequest::class.java) ?: false
+    }
+
+    override fun validate(saleDocumentReq: Any?, errors: Errors?) {
+        if (saleDocumentReq != null && saleDocumentReq is SaleDocumentRequest) {
+            if (isDateInvalid(saleDocumentReq))
                 errors?.reject(WRONG_PAYMENT_DATE)
 
         }
     }
 
-    override fun supports(clazz: Class<*>?): Boolean {
-        return clazz?.isAssignableFrom(SaleDocumentRequest::class.java) ?: false
-    }
+    private fun isDateInvalid(sdr: SaleDocumentRequest): Boolean =
+            sdr.creationDate?.isBefore(sdr.paymentDate) ?:
+                    !sdr.paymentDate.isAfter(LocalDateTime.now())
 
 }
