@@ -29,14 +29,17 @@ class Customer(
         @Column(name = "nip")
         val nip: String?,
 
-        @OneToOne(targetEntity = Address::class)
+        @OneToOne(targetEntity = Address::class, cascade = [CascadeType.ALL])
         @JoinColumn(name = "address_uuid", referencedColumnName = "address_uuid")
         val address: Address,
 
-        @OneToMany(fetch = FetchType.LAZY, mappedBy = "customer")
+        @OneToMany(fetch = FetchType.LAZY, mappedBy = "customer", cascade = [CascadeType.ALL])
         val orders: MutableSet<Order> = HashSet(),
 
-        @OneToMany(fetch = FetchType.LAZY, mappedBy = "customer", targetEntity = SaleDocument::class)
+        @OneToMany(fetch = FetchType.LAZY,
+                mappedBy = "customer",
+                targetEntity = SaleDocument::class,
+                cascade = [CascadeType.ALL])
         val saleDocuments: MutableSet<SaleDocument> = HashSet()
 ) {
 

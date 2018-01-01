@@ -4,8 +4,6 @@ import cf.jrozen.po.warehouse.utils.randomUUID
 import java.math.BigDecimal
 import java.time.LocalDateTime
 import javax.persistence.*
-import javax.validation.constraints.Max
-import javax.validation.constraints.Min
 
 @Entity
 @Table(name = "orders")
@@ -34,7 +32,7 @@ class Order(
 
 ) {
     fun canGenerateSaleDocument(): Boolean {
-        return DocumentState.CLOSED != this.documentState
+        return this.documentState == DocumentState.ACCEPTED
     }
 }
 
@@ -111,7 +109,7 @@ class TaxGroup(
 
         @Column(name = "tax_amount")
         val taxAmount: BigDecimal
-){
+) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (other !is TaxGroup) return false

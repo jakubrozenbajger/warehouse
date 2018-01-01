@@ -12,7 +12,7 @@ abstract class SaleDocument(
 
         @Id
         @Column(name = "sale_document_uuid")
-        private val saleDocumentId: String = randomUUID(),
+        val saleDocumentId: String = randomUUID(),
 
         @Column(nullable = false)
         val creationDate: LocalDateTime = LocalDateTime.now(),

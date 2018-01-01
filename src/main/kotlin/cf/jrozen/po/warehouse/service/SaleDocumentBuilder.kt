@@ -1,6 +1,5 @@
 package cf.jrozen.po.warehouse.service
 
-import cf.jrozen.po.warehouse.controller.SaleDocumentRequest
 import cf.jrozen.po.warehouse.domain.*
 import cf.jrozen.po.warehouse.utils.randomUUID
 import java.time.LocalDateTime

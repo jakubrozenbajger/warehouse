@@ -16,7 +16,7 @@ class CustomerService(val customerRepository: CustomerRepository) {
     fun getCustomer(customerId: String): Customer = customerRepository.getOne(customerId)
 
     fun deleteCustomer(customerId: String): Customer {
-        val customer = getCustomer(customerId)
+         val customer = getCustomer(customerId)
         if (customer.canBeDeleted())
             customerRepository.delete(customerId)
         else throw IllegalArgumentException()

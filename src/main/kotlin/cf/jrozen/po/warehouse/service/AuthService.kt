@@ -1,5 +1,6 @@
 package cf.jrozen.po.warehouse.service
 
+import cf.jrozen.po.warehouse.common.NoSuchPrincipalException
 import cf.jrozen.po.warehouse.domain.Dealer
 import cf.jrozen.po.warehouse.domain.User
 import org.springframework.stereotype.Service
@@ -19,4 +20,3 @@ class AuthService(
     }
 }
 
-class NoSuchPrincipalException(msg: String) : IllegalStateException(msg)

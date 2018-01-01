@@ -1,17 +1,21 @@
 package cf.jrozen.po.warehouse.controller
 
 import cf.jrozen.po.warehouse.domain.Order
-import cf.jrozen.po.warehouse.domain.SaleDocumentType
 import cf.jrozen.po.warehouse.service.OrderService
+import cf.jrozen.po.warehouse.service.SaleDocumentRequest
+import org.springframework.validation.annotation.Validated
+import org.springframework.web.bind.WebDataBinder
 import org.springframework.web.bind.annotation.*
-import java.time.LocalDateTime
 
 @RestController
 @RequestMapping("/orders")
-class OrderController(val orderService: OrderService) {
+class OrderController(
+        val orderService: OrderService,
+        val saleDocumentRequestValidator: SaleDocumentRequestValidator) {
 
     @GetMapping("/")
-    fun getOrders(): MutableList<Order> = orderService.getAllOrders()
+    fun getOrders(): MutableList<Order> =
+            orderService.getAllOrders()
 
     @GetMapping("/{orderId}")
     fun getOrder(orderId: String): Order =
@@ -24,13 +28,12 @@ class OrderController(val orderService: OrderService) {
     @PostMapping("/{orderId}/sale-document")
     fun generateSaleDocument(
             @PathVariable("orderId", required = true) orderId: String,
-            @RequestBody saleDocumentRequest: SaleDocumentRequest): Order {
+            @RequestBody @Validated saleDocumentRequest: SaleDocumentRequest): Order {
         return orderService.createSaleDocument(orderId, saleDocumentRequest)
     }
-}
 
-class SaleDocumentRequest(
-        val type: SaleDocumentType,
-        val paymentDate: LocalDateTime,
-        val creationDate: LocalDateTime?
-)
+    @InitBinder("saleDocumentRequest")
+    fun addCustomerValidator(binder: WebDataBinder) {
+        binder.validator = saleDocumentRequestValidator
+    }
+}

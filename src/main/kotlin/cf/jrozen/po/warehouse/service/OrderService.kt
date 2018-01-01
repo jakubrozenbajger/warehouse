@@ -1,6 +1,5 @@
 package cf.jrozen.po.warehouse.service
 
-import cf.jrozen.po.warehouse.controller.SaleDocumentRequest
 import cf.jrozen.po.warehouse.domain.DocumentState
 import cf.jrozen.po.warehouse.domain.Order
 import cf.jrozen.po.warehouse.repository.OrderRepository
@@ -28,7 +27,7 @@ class OrderService(
 
         saleDocumentService.generateNewSaleDocument(order, saleDocumentRequest)
 
-        order.documentState = DocumentState.CLOSED
+        order.documentState = DocumentState.REALIZED
         orderRepository.save(order)
         return order
     }
