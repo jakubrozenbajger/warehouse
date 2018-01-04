@@ -17,17 +17,22 @@ class CustomerController(
     @GetMapping
     fun getAllCustomers(): List<Customer> = customerService.getAllCustomers()
 
-    @GetMapping("/{customerId}")
-    fun getCustomer(customerId: String): Customer = customerService.getCustomer(customerId)
+    @GetMapping("/{customerUuid}")
+    fun getCustomer(@PathVariable customerUuid: String): Customer =
+            customerService.getCustomer(customerUuid)
 
     @PutMapping
-    fun updateCustomer(@RequestBody @Validated customer: Customer) = customerService.saveCustomer(customer)
+    fun updateCustomer(@RequestBody @Validated customer: Customer): Customer =
+            customerService.saveCustomer(customer)
 
     @PostMapping
-    fun saveCustomer(@RequestBody @Validated customer: Customer) = customerService.saveCustomer(customer)
+    fun saveCustomer(@RequestBody @Validated customer: Customer): Customer =
+            customerService.saveCustomer(customer)
 
-    @DeleteMapping("/{customerId}")
-    fun deleteCustomer(customerId: String) = customerService.deleteCustomer(customerId)
+
+    @DeleteMapping("/{customerUuid}")
+    fun deleteCustomer(@PathVariable customerUuid: String): Customer =
+            customerService.deleteCustomer(customerUuid)
 
     @InitBinder("customer")
     fun addCustomerValidator(binder: WebDataBinder) {

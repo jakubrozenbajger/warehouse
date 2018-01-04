@@ -1,5 +1,6 @@
 package cf.jrozen.po.warehouse.repository
 
+import org.springframework.stereotype.Repository
 import java.io.OutputStream
 import java.util.logging.Logger
 
@@ -10,6 +11,7 @@ abstract class DocumentRepository {
     abstract fun saveDocument(name: String, sd: OutputStream)
 }
 
+@Repository
 class S3DocumentRepository : DocumentRepository() {
 
     override fun saveDocument(name: String, sd: OutputStream) {
@@ -18,6 +20,7 @@ class S3DocumentRepository : DocumentRepository() {
     }
 }
 
+@Repository
 class FileSystemDocumentRepository : DocumentRepository() {
     override fun saveDocument(name: String, sd: OutputStream) {
         logger.info("Saving document to file system repository")

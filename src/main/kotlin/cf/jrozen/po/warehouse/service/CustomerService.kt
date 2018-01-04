@@ -10,10 +10,12 @@ import org.springframework.transaction.annotation.Transactional
 @Transactional(readOnly = false)
 class CustomerService(val customerRepository: CustomerRepository) {
 
-    fun saveCustomer(customer: Customer): Customer = customerRepository.save(customer)
+    fun saveCustomer(customer: Customer): Customer =
+            customerRepository.save(customer)
 
     @Transactional(readOnly = true)
-    fun getCustomer(customerId: String): Customer = customerRepository.getOne(customerId)
+    fun getCustomer(customerId: String): Customer =
+            customerRepository.getOne(customerId)
 
     fun deleteCustomer(customerId: String): Customer {
         val customer = getCustomer(customerId)
