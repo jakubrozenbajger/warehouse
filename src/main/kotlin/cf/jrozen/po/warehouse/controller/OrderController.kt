@@ -13,7 +13,7 @@ class OrderController(
         val orderService: OrderService,
         val saleDocumentRequestValidator: SaleDocumentRequestValidator) {
 
-    @GetMapping("/")
+    @GetMapping
     fun getOrders(): MutableList<Order> =
             orderService.getAllOrders()
 

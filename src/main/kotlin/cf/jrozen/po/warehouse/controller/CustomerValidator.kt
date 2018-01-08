@@ -11,7 +11,8 @@ class CustomerValidator : Validator {
 
     override fun validate(target: Any?, errors: Errors?) {
         if (target != null && target is Customer) {
-            errors?.reject(NULL_EMAIL)
+//            if (target)
+//            errors?.reject(NULL_EMAIL)
         }
     }
 
