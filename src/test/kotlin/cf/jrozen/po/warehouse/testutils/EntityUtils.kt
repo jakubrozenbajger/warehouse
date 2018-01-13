@@ -60,6 +60,21 @@ fun randomInvoice(): Invoice {
     )
 }
 
+fun randomReceipt(): Receipt {
+    return Receipt(
+            randomUUID(),
+            randomDate(),
+            randomDate(),
+            randomAlphanumeric(),
+            randomAlphanumeric(),
+            randomAddress(),
+            randomOrder(),
+            randomCustomer(),
+            randomDealer(),
+            HashSet()
+    )
+}
+
 fun randomDealer(): Dealer {
     return Dealer(
             randomAlphanumeric(),
