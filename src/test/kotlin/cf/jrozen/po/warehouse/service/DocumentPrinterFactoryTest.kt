@@ -32,14 +32,5 @@ class DocumentPrinterFactoryTest {
         assertFalse(printer.javaClass.isAssignableFrom(InvoiceDocumentPrinter::class.java))
         assertTrue(printer.javaClass.isAssignableFrom(ReceiptDocumentPrinter::class.java))
     }
-//
-//    @Test(expected = IllegalStateException::class)
-//    fun shouldReturnProperTypeReceipt() {
-////        val receipt= object : SaleDocument(){}
-//
-//        val printer = documentPrinterFactory.getPrinter(receipt)
-//        assertFalse(printer.javaClass.isAssignableFrom(InvoiceDocumentPrinter::class.java))
-//        assertTrue(printer.javaClass.isAssignableFrom(ReceiptDocumentPrinter::class.java))
-//    }
 
 }
