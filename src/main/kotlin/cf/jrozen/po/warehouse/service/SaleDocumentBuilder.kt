@@ -4,7 +4,7 @@ import cf.jrozen.po.warehouse.domain.*
 import cf.jrozen.po.warehouse.utils.randomUUID
 import java.time.LocalDateTime
 import java.util.*
-import kotlin.collections.ArrayList
+import kotlin.collections.HashSet
 
 interface SaleDocumentBuilder {
     fun build(): SaleDocument
@@ -56,7 +56,7 @@ class InvoiceBuilder(
                 order,
                 order.customer,
                 dealer,
-                ArrayList(),
+                HashSet(),
                 saleDocumentService.nextSerialNumber()
         )
     }
@@ -79,7 +79,7 @@ class ReceiptBuilder(
                 order,
                 order.customer,
                 dealer,
-                ArrayList()
+                HashSet()
         )
     }
 

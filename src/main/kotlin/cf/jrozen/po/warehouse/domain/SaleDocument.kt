@@ -50,7 +50,7 @@ abstract class SaleDocument(
                         referencedColumnName = "sale_document_uuid"))],
                 inverseJoinColumns = [(JoinColumn(name = "dealer_email",
                         referencedColumnName = "email"))])
-        val supervisorDealers: MutableList<Dealer> = ArrayList(),
+        val supervisorDealers: MutableSet<Dealer> = HashSet(),
 
         @Enumerated
         var documentState: DocumentState = DocumentState.NEW
@@ -85,7 +85,7 @@ class Receipt(
         order: Order,
         customer: Customer,
         seller: Dealer,
-        supervisorDealers: MutableList<Dealer> = ArrayList()
+        supervisorDealers: MutableSet<Dealer> = HashSet()
 
 ) : SaleDocument(
         saleDocumentId,
@@ -112,7 +112,7 @@ class Invoice(
         order: Order,
         customer: Customer,
         seller: Dealer,
-        supervisorDealers: MutableList<Dealer> = ArrayList(),
+        supervisorDealers: MutableSet<Dealer> = HashSet(),
         @Column(name = "serial_number")
         val serialNumber: String
 

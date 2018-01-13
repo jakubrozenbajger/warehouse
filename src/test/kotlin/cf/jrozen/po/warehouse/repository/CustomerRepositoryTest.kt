@@ -1,6 +1,6 @@
 package cf.jrozen.po.warehouse.repository
 
-import cf.jrozen.po.warehouse.testutils.EntityUtils.randomCustomer
+import cf.jrozen.po.warehouse.testutils.randomCustomer
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
