@@ -3,6 +3,7 @@ package cf.jrozen.po.warehouse.domain
 import cf.jrozen.po.warehouse.utils.JsonLocalDateTimeDeserializer
 import cf.jrozen.po.warehouse.utils.JsonLocalDateTimeSerializer
 import cf.jrozen.po.warehouse.utils.randomUUID
+import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import com.fasterxml.jackson.databind.annotation.JsonSerialize
 import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters
@@ -40,12 +41,14 @@ class Customer(
         val address: Address,
 
         @OneToMany(fetch = FetchType.LAZY, mappedBy = "customer", cascade = [CascadeType.ALL])
+        @JsonIgnore
         val orders: MutableSet<Order> = HashSet(),
 
         @OneToMany(fetch = FetchType.LAZY,
                 mappedBy = "customer",
                 targetEntity = SaleDocument::class,
                 cascade = [CascadeType.ALL])
+        @JsonIgnore
         val saleDocuments: MutableSet<SaleDocument> = HashSet()
 ) {
 

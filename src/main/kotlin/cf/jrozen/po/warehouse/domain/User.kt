@@ -1,5 +1,6 @@
 package cf.jrozen.po.warehouse.domain
 
+import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters
 import java.time.LocalDateTime
 import javax.persistence.*
 
@@ -18,6 +19,7 @@ abstract class User(
         var surname: String,
 
         @Column(nullable = false)
+        @Convert(converter = Jsr310JpaConverters.LocalDateTimeConverter::class)
         val creationDate: LocalDateTime = LocalDateTime.now(),
 
         @ManyToMany(mappedBy = "supervisorDealers")

@@ -1,6 +1,8 @@
 package cf.jrozen.po.warehouse.domain
 
 import cf.jrozen.po.warehouse.utils.randomUUID
+import com.fasterxml.jackson.annotation.JsonIgnore
+import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters
 import java.math.BigDecimal
 import java.time.LocalDateTime
 import javax.persistence.*
@@ -14,6 +16,7 @@ class Order(
 
         @ManyToOne(targetEntity = Dealer::class)
         @JoinColumn(nullable = false, name = "email", referencedColumnName = "email")
+        @JsonIgnore
         val dealer: Dealer,
 
         @ManyToOne(targetEntity = Customer::class)
@@ -21,6 +24,7 @@ class Order(
         val customer: Customer,
 
         @Column(nullable = false)
+        @Convert(converter = Jsr310JpaConverters.LocalDateTimeConverter::class)
         val creationDate: LocalDateTime = LocalDateTime.now(),
 
         @OneToMany
