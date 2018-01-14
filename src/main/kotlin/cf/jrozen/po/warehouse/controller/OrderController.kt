@@ -18,7 +18,7 @@ class OrderController(
             orderService.getAllOrders()
 
     @GetMapping("/{orderId}")
-    fun getOrder(orderId: String): Order =
+    fun getOrder(@PathVariable("orderId", required = true) orderId: String): Order =
             orderService.getOrder(orderId)
 
     @PutMapping("/{orderId}")

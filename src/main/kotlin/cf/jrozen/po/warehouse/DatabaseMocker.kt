@@ -1,11 +1,16 @@
 package cf.jrozen.po.warehouse
 
+import cf.jrozen.po.warehouse.domain.Order
+import cf.jrozen.po.warehouse.domain.OrderPosition
 import cf.jrozen.po.warehouse.repository.CustomerRepository
 import cf.jrozen.po.warehouse.repository.OrderRepository
 import cf.jrozen.po.warehouse.repository.SaleDocumentRepository
 import cf.jrozen.po.warehouse.repository.UserRepository
+import org.apache.commons.lang3.RandomUtils
 import org.springframework.beans.factory.InitializingBean
 import org.springframework.stereotype.Component
+import java.util.*
+import kotlin.collections.HashSet
 
 @Component
 class DatabaseMocker(
@@ -22,7 +27,12 @@ class DatabaseMocker(
             customerRepository.save(customer)
             val dealer = randomDealer()
             userRepository.save(dealer)
-            orderRepository.save(randomOrder(dealer, customer))
+            val set = HashSet<OrderPosition>()
+            for (i in 0..RandomUtils.nextInt(2, 10)) {
+                set.add(randomOrderPosition())
+//                orderRepository
+            }
+            orderRepository.save(randomOrder(dealer, customer, set))
 //            saleDocumentRepository.save(randomInvoice())
         }
     }

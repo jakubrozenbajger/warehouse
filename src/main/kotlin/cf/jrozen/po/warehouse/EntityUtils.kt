@@ -85,13 +85,15 @@ fun randomDealer(): Dealer {
     )
 }
 
-fun randomOrder(dealer: Dealer = randomDealer(), customer: Customer = randomCustomer()): Order {
+fun randomOrder(dealer: Dealer = randomDealer(),
+                customer: Customer = randomCustomer(),
+                orderPositions: MutableSet<OrderPosition> = HashSet()): Order {
     return Order(
             randomUUID(),
             dealer,
             customer,
             randomDate(),
-            HashSet(),
+            orderPositions,
             DocumentState.NEW
     )
 }

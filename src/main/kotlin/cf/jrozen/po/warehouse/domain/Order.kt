@@ -27,7 +27,7 @@ class Order(
         @Convert(converter = Jsr310JpaConverters.LocalDateTimeConverter::class)
         val creationDate: LocalDateTime = LocalDateTime.now(),
 
-        @OneToMany
+        @OneToMany(cascade = [CascadeType.ALL])
         @JoinColumn
         var orderPosition: MutableSet<OrderPosition> = HashSet(),
 
@@ -50,7 +50,7 @@ class OrderPosition(
         @Column(name = "amount")
         var amount: BigDecimal = BigDecimal.ONE,
 
-        @OneToOne()
+        @OneToOne(cascade = [CascadeType.ALL])
         @JoinColumn(name = "ware_uuid", nullable = false)
         var ware: Ware,
 
@@ -67,6 +67,7 @@ class Rabat(
 
         @OneToOne(cascade = [(CascadeType.ALL)], fetch = FetchType.LAZY, optional = false)
         @JoinColumn(name = "order_position_uuid")
+        @JsonIgnore
         val order: OrderPosition,
 
         @Column(name = "monetary_value", nullable = true)
@@ -98,7 +99,7 @@ class Ware(
         @Embedded
         val price: Price,
 
-        @ManyToOne(targetEntity = TaxGroup::class)
+        @ManyToOne(targetEntity = TaxGroup::class, cascade = [CascadeType.ALL])
         @JoinColumn(name = "tax_group", referencedColumnName = "name")
         val taxGroup: TaxGroup
 
