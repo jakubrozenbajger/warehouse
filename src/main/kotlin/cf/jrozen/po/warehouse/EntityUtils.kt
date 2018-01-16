@@ -94,7 +94,7 @@ fun randomOrder(dealer: Dealer = randomDealer(),
             customer,
             randomDate(),
             orderPositions,
-            DocumentState.NEW
+            DocumentState.values().let { l -> l[(RandomUtils.nextInt(0, l.size))] }
     )
 }
 

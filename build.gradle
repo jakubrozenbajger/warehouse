@@ -22,6 +22,7 @@ apply plugin: 'kotlin-spring'
 apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
 apply plugin: "kotlin-jpa"
+apply plugin: 'jdepend'
 
 group = 'cf.jrozen.po'
 version = '0.0.1-SNAPSHOT'

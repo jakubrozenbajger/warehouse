@@ -1,11 +1,7 @@
 package cf.jrozen.po.warehouse.domain
 
-import cf.jrozen.po.warehouse.utils.JsonLocalDateTimeDeserializer
-import cf.jrozen.po.warehouse.utils.JsonLocalDateTimeSerializer
 import cf.jrozen.po.warehouse.utils.randomUUID
 import com.fasterxml.jackson.annotation.JsonIgnore
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize
-import com.fasterxml.jackson.databind.annotation.JsonSerialize
 import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters
 import java.time.LocalDateTime
 import javax.persistence.*

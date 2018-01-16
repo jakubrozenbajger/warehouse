@@ -28,7 +28,7 @@ class DatabaseMocker(
             val dealer = randomDealer()
             userRepository.save(dealer)
             val set = HashSet<OrderPosition>()
-            for (i in 0..RandomUtils.nextInt(2, 10)) {
+            for (j in 0..RandomUtils.nextInt(2, 10)) {
                 set.add(randomOrderPosition())
 //                orderRepository
             }
