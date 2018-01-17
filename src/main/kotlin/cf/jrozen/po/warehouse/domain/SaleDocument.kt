@@ -28,6 +28,10 @@ abstract class SaleDocument(
         @Column(nullable = false)
         val customerInfo: String,
 
+        @Lob
+        @Column(nullable = false)
+        var description: String?,
+
         @OneToOne(targetEntity = Address::class)
         @JoinColumn(name = "customer_address", referencedColumnName = "address_uuid")
         val address: Address,
@@ -81,6 +85,7 @@ class Receipt(
         paymentDate: LocalDateTime,
         sellerInfo: String,
         customerInfo: String,
+        description: String?,
         address: Address,
         order: Order,
         customer: Customer,
@@ -93,6 +98,7 @@ class Receipt(
         paymentDate,
         sellerInfo,
         customerInfo,
+        description,
         address,
         order,
         customer,
@@ -108,6 +114,7 @@ class Invoice(
         paymentDate: LocalDateTime,
         sellerInfo: String,
         customerInfo: String,
+        description: String?,
         address: Address,
         order: Order,
         customer: Customer,
@@ -122,6 +129,7 @@ class Invoice(
         paymentDate,
         sellerInfo,
         customerInfo,
+        description,
         address,
         order,
         customer,

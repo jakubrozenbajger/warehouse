@@ -17,6 +17,9 @@ class Customer(
         @Column(nullable = false)
         var name: String,
 
+        @Column(name = "email")
+        val email: String,
+
         @Lob
         @Column(nullable = true)
         var description: String?,

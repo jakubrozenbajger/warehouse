@@ -19,6 +19,10 @@ class Order(
         @JsonIgnore
         val dealer: Dealer,
 
+        @Lob
+        @Column(name = "order_uuid")
+        var description: String?,
+
         @ManyToOne(targetEntity = Customer::class)
         @JoinColumn(nullable = false, name = "customer_uuid", referencedColumnName = "customer_uuid")
         val customer: Customer,

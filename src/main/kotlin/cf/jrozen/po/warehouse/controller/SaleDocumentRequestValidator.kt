@@ -1,6 +1,7 @@
 package cf.jrozen.po.warehouse.controller
 
 import cf.jrozen.po.warehouse.common.ErrorKeys.WRONG_PAYMENT_DATE
+import cf.jrozen.po.warehouse.domain.SaleDocumentType
 import cf.jrozen.po.warehouse.service.SaleDocumentRequest
 import org.springframework.stereotype.Component
 import org.springframework.validation.Errors

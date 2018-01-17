@@ -6,5 +6,6 @@ import java.time.LocalDateTime
 class SaleDocumentRequest(
         val type: SaleDocumentType,
         val paymentDate: LocalDateTime,
-        val creationDate: LocalDateTime?
+        val creationDate: LocalDateTime?,
+        val description: String
 )

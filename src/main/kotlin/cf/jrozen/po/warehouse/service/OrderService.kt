@@ -2,6 +2,7 @@ package cf.jrozen.po.warehouse.service
 
 import cf.jrozen.po.warehouse.domain.DocumentState
 import cf.jrozen.po.warehouse.domain.Order
+import cf.jrozen.po.warehouse.domain.SaleDocumentType
 import cf.jrozen.po.warehouse.repository.OrderRepository
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -24,6 +25,9 @@ class OrderService(
         val order: Order = orderRepository.getOne(orderId)
         if (!order.canGenerateSaleDocument())
             throw IllegalArgumentException("Cannot generate sale document for order: $orderId")
+        if (saleDocumentRequest.type == SaleDocumentType.INVOICE
+                && order.customer.nip == null)
+            throw IllegalArgumentException("cannot generate sale document for order: $order, cause nip is not present")
 
         saleDocumentService.generateNewSaleDocument(order, saleDocumentRequest)
 
