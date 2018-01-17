@@ -11,7 +11,7 @@ fun randomCustomer(): Customer {
     return Customer(
             randomUUID(),
             randomAlphanumeric(),
-            randomAlphanumeric(),
+            randomEmail(),
             randomAlphanumeric(),
             randomDate(),
             randomPhoneNumber(),
@@ -20,6 +20,10 @@ fun randomCustomer(): Customer {
             HashSet(),
             HashSet()
     )
+}
+
+fun randomEmail(): String {
+    return randomAlphanumeric(5) + "@" + randomAlphanumeric(6) + ".com"
 }
 
 fun randomAddress(): Address {
@@ -33,8 +37,8 @@ fun randomAddress(): Address {
     )
 }
 
-fun randomAlphanumeric(): String {
-    return RandomStringUtils.randomAlphanumeric(8, 19)
+fun randomAlphanumeric(limit: Int = 19): String {
+    return RandomStringUtils.randomAlphanumeric(4, limit)
 }
 
 fun randomPhoneNumber(): String {
