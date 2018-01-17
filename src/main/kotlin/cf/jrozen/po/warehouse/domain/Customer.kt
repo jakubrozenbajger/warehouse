@@ -21,7 +21,7 @@ class Customer(
         val email: String,
 
         @Lob
-        @Column(nullable = true)
+        @Column(name = "description", nullable = true)
         var description: String?,
 
         @Column(nullable = false)

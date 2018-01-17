@@ -29,7 +29,7 @@ abstract class SaleDocument(
         val customerInfo: String,
 
         @Lob
-        @Column(nullable = false)
+        @Column(name = "description", nullable = true)
         var description: String?,
 
         @OneToOne(targetEntity = Address::class)

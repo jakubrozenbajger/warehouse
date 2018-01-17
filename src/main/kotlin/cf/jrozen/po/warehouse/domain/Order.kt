@@ -20,7 +20,7 @@ class Order(
         val dealer: Dealer,
 
         @Lob
-        @Column(name = "order_uuid")
+        @Column(name = "description", nullable = true)
         var description: String?,
 
         @ManyToOne(targetEntity = Customer::class)
