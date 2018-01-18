@@ -32,6 +32,9 @@ public class FirstPdf {
     private static Font smallBold = new Font(Font.FontFamily.TIMES_ROMAN, 12,
             Font.BOLD);
 
+    /**
+     * Calls methods for creating a pdf sales document.
+     */
     public static void main(String[] args) {
         try {
             Document document = new Document();
@@ -50,6 +53,9 @@ public class FirstPdf {
     // iText allows to add metadata to the PDF which can be viewed in your Adobe
     // Reader
     // under File -> Properties
+    /**
+     * Adds metadata to the generated sales document.
+     */
     private static void addMetaData(Document document) {
         document.addTitle("My first PDF");
         document.addSubject("Using iText");
@@ -58,6 +64,9 @@ public class FirstPdf {
         document.addCreator("Lars Vogel");
     }
 
+    /**
+     * Adds titles to the generated sales document.
+     */
     private static void addTitlePage(Document document)
             throws DocumentException {
         Paragraph preface = new Paragraph();
@@ -87,6 +96,9 @@ public class FirstPdf {
         document.newPage();
     }
 
+    /**
+     * Adds content to the generated sales document.
+     */
     private static void addContent(Document document) throws DocumentException {
         Anchor anchor = new Anchor("First Chapter", catFont);
         anchor.setName("First Chapter");
@@ -132,6 +144,9 @@ public class FirstPdf {
 
     }
 
+    /**
+     * Creates tables in a generated sales document.
+     */
     private static void createTable(Section subCatPart)
             throws BadElementException {
         PdfPTable table = new PdfPTable(3);
@@ -165,6 +180,9 @@ public class FirstPdf {
 
     }
 
+    /**
+     * Creates list in a generated sales document.
+     */
     private static void createList(Section subCatPart) {
         List list = new List(true, false, 10);
         list.add(new ListItem("First point"));
@@ -173,6 +191,9 @@ public class FirstPdf {
         subCatPart.add(list);
     }
 
+    /**
+     * Adds empty lines in a generated sales document.
+     */
     private static void addEmptyLine(Paragraph paragraph, int number) {
         for (int i = 0; i < number; i++) {
             paragraph.add(new Paragraph(" "));

@@ -10,6 +10,9 @@ class DocumentArchiveService(
         val documentRepository: DocumentRepository,
         val documentPrinterFactory: DocumentPrinterFactory
 ) {
+    /**
+     * Archives the issued [saleDocument] so that it can not be issued once again.
+     */
     fun archive(saleDocument: SaleDocument) {
         val printer = documentPrinterFactory.getPrinter(saleDocument)
         val printedStream: OutputStream = printer.printDocument()

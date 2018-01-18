@@ -16,6 +16,7 @@ interface FinanceProcessingStrategy {
 @Component
 class DefaultFinanceProcessingStrategy : FinanceProcessingStrategy {
 
+
     override fun calculatePerTaxGroup(order: Order): Map<TaxGroup, List<BigDecimal>> {
         val map = order.orderPosition.groupBy { op: OrderPosition -> op.ware.taxGroup }
         return map.mapValues { e ->
@@ -25,19 +26,35 @@ class DefaultFinanceProcessingStrategy : FinanceProcessingStrategy {
         }
     }
 
+    /**
+     * Calculates the gross price of the order position [op].
+     * @return the gross price of the order position.
+     */
     override fun calculateGrossPrice(op: OrderPosition): BigDecimal {
         return calculateNetPrice(op) + calculateVatPrice(op)
     }
 
+    /**
+     * Calculates the corresponding VAT of the order position [op].
+     * @return the price of VAT.
+     */
     override fun calculateVatPrice(op: OrderPosition): BigDecimal {
         return calculateNetPrice(op) * op.ware.taxGroup.taxAmount
     }
 
+    /**
+     * Calculates the net price of the order position [op] multiplied by the number of its occurrence in the order.
+     * @return  the total net price of the order position.
+     */
     override fun calculateNetPrice(op: OrderPosition): BigDecimal {
         return op.ware.price.value * op.amount
     }
 
-
+    /**
+     * Calculates the net price, VAT and gross price of the order position [op].
+     * @return the list with the calculated prices of the order position, the first net price, the second VAT
+     * and the last gross price.
+     */
     fun toTaxTuple(op: OrderPosition): List<BigDecimal> {
         return listOf(
                 calculateNetPrice(op),

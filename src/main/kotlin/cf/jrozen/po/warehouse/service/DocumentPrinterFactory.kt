@@ -11,6 +11,10 @@ class DocumentPrinterFactory(
         val financeProcessingStrategy: FinanceProcessingStrategy
 )
 {
+    /**
+     * Creates evidence of sale for printing based on [saleDocument] choice, receipt or invoice.
+     * @return the type of sales proof prepared for printing.
+     */
     fun getPrinter(saleDocument: SaleDocument): DocumentPrinter{
         return when (saleDocument) {
             is Invoice -> InvoiceDocumentPrinter(saleDocument, financeProcessingStrategy)

@@ -13,9 +13,17 @@ class OrderService(
         val orderRepository: OrderRepository,
         val saleDocumentService: SaleDocumentService) {
 
+    /**
+     * Retrieves all orders from the repository.
+     * @return list of all orders in the warehouse.
+     */
     @Transactional(readOnly = true)
     fun getAllOrders(): MutableList<Order> = orderRepository.findAll()
 
+    /**
+     * Retrieves all orders from the repository.
+     * @return list of all orders in the warehouse.
+     */
     @Transactional(readOnly = true)
     fun getOrder(orderId: String): Order = orderRepository.getOne(orderId)
 
