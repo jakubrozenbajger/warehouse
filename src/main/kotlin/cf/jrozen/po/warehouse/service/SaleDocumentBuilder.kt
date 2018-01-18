@@ -19,16 +19,28 @@ abstract class AbstractSaleDocumentBuilder(
     lateinit var dealer: Dealer
     lateinit var order: Order
 
+    /**
+     * Assigns the given [order] to the class field named order.
+     * @return current order.
+     */
     open fun fromOrder(order: Order): AbstractSaleDocumentBuilder {
         this.order = order
         return this
     }
 
+    /**
+     * Assigns the given [dealer] to the class field named dealer.
+     * @return current dealer.
+     */
     fun withCreator(dealer: Dealer): AbstractSaleDocumentBuilder {
         this.dealer = dealer
         return this
     }
 
+    /**
+     * Transforms the given [customer]'s data into a string.
+     * @return the given customer's data in the form of a string.
+     */
     fun getInfoAsString(customer: Customer): String {
         val sj = StringJoiner(", ")
         sj.add(customer.name)
@@ -45,6 +57,10 @@ class InvoiceBuilder(
         saleDocumentRequest: SaleDocumentRequest
 ) : AbstractSaleDocumentBuilder(companyService, saleDocumentRequest) {
 
+    /**
+     * Fills the invoice with data.
+     * @return invoice supplemented with data.
+     */
     override fun build(): SaleDocument {
         return Invoice(
                 randomUUID(),
@@ -69,6 +85,10 @@ class ReceiptBuilder(
         saleDocumentRequest: SaleDocumentRequest
 ) : AbstractSaleDocumentBuilder(companyService, saleDocumentRequest) {
 
+    /**
+     * Fills the receipt with data.
+     * @return receipt supplemented with data.
+     */
     override fun build(): SaleDocument {
         return Receipt(
                 randomUUID(),

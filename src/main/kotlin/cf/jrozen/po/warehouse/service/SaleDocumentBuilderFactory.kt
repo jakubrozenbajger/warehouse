@@ -13,6 +13,10 @@ class SaleDocumentBuilderFactory(
     @Lazy
     lateinit var saleDocumentService: SaleDocumentService
 
+    /**
+     * Checks the type of selected sales document in [saleDocumentRequest] and then builds a invoice or receipt.
+     * @return invoice or receipt.
+     */
     fun getBuilder(saleDocumentRequest: SaleDocumentRequest): AbstractSaleDocumentBuilder {
         return when (saleDocumentRequest.type) {
             SaleDocumentType.RECEIPT -> ReceiptBuilder(companyService, saleDocumentRequest)

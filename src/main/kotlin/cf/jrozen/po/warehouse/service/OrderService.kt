@@ -21,14 +21,23 @@ class OrderService(
     fun getAllOrders(): MutableList<Order> = orderRepository.findAll()
 
     /**
-     * Retrieves all orders from the repository.
-     * @return list of all orders in the warehouse.
+     * Looks up the order with the id number [orderId] in the repository.
+     * @return the order with the given id number.
      */
     @Transactional(readOnly = true)
     fun getOrder(orderId: String): Order = orderRepository.getOne(orderId)
 
+    /**
+     * Updates changes in a given [order].
+     * @return the given order after the change.
+     */
     fun updateOrder(order: Order): Order = orderRepository.save(order)
 
+    /**
+     * Creates an order sales document with the given identification number [orderId].
+     * Additional information on the type of sales document and data on the order's execution are included in [saleDocumentRequest].
+     * @return the order with the given identification number.
+     */
     fun createSaleDocument(orderId: String, saleDocumentRequest: SaleDocumentRequest): Order {
         val order: Order = orderRepository.getOne(orderId)
         if (!order.canGenerateSaleDocument())

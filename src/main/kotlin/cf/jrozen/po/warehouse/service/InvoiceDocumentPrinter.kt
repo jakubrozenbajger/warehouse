@@ -18,6 +18,7 @@ class InvoiceDocumentPrinter(
 
     private var lp: AtomicInteger = resetLp()
 
+
     override fun printDocument(): OutputStream {
         val baos = ByteArrayOutputStream()
 
@@ -111,10 +112,18 @@ object InvoiceDocumentTemplate {
             "Wartość brutto")
 
 
+    /**
+     * Passes the order headers to the method that creates the tables in the pdf document.
+     * @return calling a function that creates tables with the headers passed in the argument.
+     */
     fun orderTable(): PdfPTable {
         return createPdfTable(orderTableHeadersPl)
     }
 
+    /**
+     * Passes price type headers to the method that creates the tables in the pdf document.
+     * @return calling a function that creates tables with the headers passed in the argument.
+     */
     fun vatTable(): PdfPTable {
         return createPdfTable(vatTableHeadersPl)
     }

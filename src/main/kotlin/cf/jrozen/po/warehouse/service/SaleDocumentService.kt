@@ -15,11 +15,20 @@ class SaleDocumentService(
         val authService: AuthService
 ) {
 
+    /**
+     * Finds the next serial number for the new order.
+     * @return the serial number for the new order.
+     */
     @Transactional(readOnly = true)
     fun nextSerialNumber(): String {
         return saleDocumentRepository.count().inc().toString()
     }
 
+    /**
+     * Creates a new sales document for the [order].
+     * Additional information on the type of sales document are included in [saleDocumentRequest].
+     * @return the sales document for the given order.
+     */
     fun generateNewSaleDocument(order: Order, saleDocumentRequest: SaleDocumentRequest): SaleDocument {
         val builder: AbstractSaleDocumentBuilder = saleDocumentBuilderFactory.getBuilder(saleDocumentRequest)
         val saleDocument: SaleDocument =
