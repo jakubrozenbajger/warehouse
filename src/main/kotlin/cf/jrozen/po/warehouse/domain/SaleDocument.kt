@@ -1,6 +1,7 @@
 package cf.jrozen.po.warehouse.domain
 
 import cf.jrozen.po.warehouse.utils.randomUUID
+import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters
 import java.time.LocalDateTime
 import javax.persistence.*
 
@@ -15,9 +16,11 @@ abstract class SaleDocument(
         val saleDocumentId: String = randomUUID(),
 
         @Column(nullable = false)
+        @Convert(converter = Jsr310JpaConverters.LocalDateTimeConverter::class)
         val creationDate: LocalDateTime = LocalDateTime.now(),
 
         @Column(nullable = false)
+        @Convert(converter = Jsr310JpaConverters.LocalDateTimeConverter::class)
         var paymentDate: LocalDateTime,
 
         @Lob
@@ -56,7 +59,7 @@ abstract class SaleDocument(
                         referencedColumnName = "email"))])
         val supervisorDealers: MutableSet<Dealer> = HashSet(),
 
-        @Enumerated
+        @Enumerated(value = EnumType.STRING)
         var documentState: DocumentState = DocumentState.NEW
 ) {
         override fun equals(other: Any?): Boolean {
