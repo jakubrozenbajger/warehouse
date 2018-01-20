@@ -27,8 +27,8 @@ class SaleDocumentRequestValidator : Validator {
         }
     }
 
-    private fun isDateInvalid(sdr: SaleDocumentRequest): Boolean =
-            sdr.creationDate?.isBefore(sdr.paymentDate) ?:
-                    !sdr.paymentDate.isAfter(LocalDateTime.now())
-
+    private fun isDateInvalid(sdr: SaleDocumentRequest): Boolean {
+        return sdr.paymentDate.isBefore(LocalDateTime.now()) &&
+                sdr.creationDate != null && sdr.creationDate.isAfter(sdr.paymentDate)
+    }
 }
