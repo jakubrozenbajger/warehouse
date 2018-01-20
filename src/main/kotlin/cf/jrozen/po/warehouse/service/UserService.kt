@@ -12,14 +12,14 @@ class UserService(
 ) {
 
     fun getRandomUser(): User {
-        return userRepository.findAll().getOrElse(0) {
-            Dealer(
-                    "aaa@bb.pl",
-                    "John",
-                    "Doe",
-                    LocalDateTime.now().minusDays(100)
-            )
-        }
+//        return userRepository.findAll().getOrElse(0) {
+        return Dealer(
+                "aaa@bb.pl",
+                "John",
+                "Doe",
+                LocalDateTime.now().minusDays(100)
+        )
+
     }
 
 }
