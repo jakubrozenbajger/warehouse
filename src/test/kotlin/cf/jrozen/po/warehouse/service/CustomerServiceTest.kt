@@ -1,22 +1,45 @@
 package cf.jrozen.po.warehouse.service
 
+import cf.jrozen.po.warehouse.controller.dto.CustomerMapper
+import cf.jrozen.po.warehouse.repository.AbstractDatabaseTest
 import cf.jrozen.po.warehouse.repository.CustomerRepository
 import cf.jrozen.po.warehouse.testutils.randomCustomer
 import cf.jrozen.po.warehouse.testutils.randomOrderPosition
 import cf.jrozen.po.warehouse.testutils.randomReceipt
 import org.junit.Assert.*
+import org.junit.Before
 import org.junit.Test
 import org.mockito.Mockito
+import org.springframework.beans.factory.annotation.Autowired
 
-class CustomerServiceTest{
+class CustomerServiceTest : AbstractDatabaseTest() {
 
-    var printer =  Mockito.mock(CustomerService::class.java)
+    @Autowired
+    lateinit var customerRepository: CustomerRepository
+
+    lateinit var customerService : CustomerService
+    var customer = randomCustomer()
+    var id = customer.customerUuid
+
+    @Before
+    fun bef(){
+        customerService = CustomerService(customerRepository, Mockito.mock(CustomerMapper::class.java))
+    }
 
     @Test
-    fun should(){
+    fun shouldAddNewCustomer() {
+
+        customerRepository.save(customer)
+
+//        var list = customerService.getAllCustomers()
+//        assertTrue(list[0].customerUuid == customer.customerUuid)
+        if (customer.canBeDeleted()) {
+            customerService.deleteCustomer(id)
+            var list = customerService.getAllCustomers()
+            assertFalse(list.contains(customer))
+        }
 
 
     }
-
 
 }
