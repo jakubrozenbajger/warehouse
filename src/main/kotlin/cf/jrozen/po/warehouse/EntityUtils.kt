@@ -15,11 +15,15 @@ fun randomCustomer(): Customer {
             randomAlphanumeric(),
             randomDate(),
             randomPhoneNumber(),
-            randomAlphanumeric(),
+            randomNip(),
             randomAddress(),
             HashSet(),
             HashSet()
     )
+}
+
+fun randomNip(): String? {
+    return RandomStringUtils.randomNumeric(10)
 }
 
 fun randomEmail(): String {

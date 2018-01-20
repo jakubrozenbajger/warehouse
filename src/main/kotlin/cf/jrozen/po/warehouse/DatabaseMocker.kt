@@ -22,18 +22,26 @@ class DatabaseMocker(
 
 
     override fun afterPropertiesSet() {
-        for (i in 0..10) {
+        println("Mocking DB")
+        for (i in 0..50) {
+            printStatus(i)
             val customer = randomCustomer()
             customerRepository.save(customer)
             val dealer = randomDealer()
             userRepository.save(dealer)
             val set = HashSet<OrderPosition>()
-            for (j in 0..RandomUtils.nextInt(2, 10)) {
+            for (j in 0..RandomUtils.nextInt(2, 20)) {
                 set.add(randomOrderPosition())
 //                orderRepository
             }
             orderRepository.save(randomOrder(dealer, customer, set))
 //            saleDocumentRepository.save(randomInvoice())
         }
+    }
+
+    fun printStatus(i: Int) {
+        print("$i ")
+        if (i%30==0)
+            println()
     }
 }

@@ -18,7 +18,7 @@ class Customer(
         var name: String,
 
         @Column(name = "email")
-        val email: String,
+        var email: String,
 
         @Lob
         @Column(name = "description", nullable = true)
@@ -33,7 +33,7 @@ class Customer(
         var phoneNumber: String?,
 
         @Column(name = "nip")
-        val nip: String?,
+        var nip: String?,
 
         @OneToOne(targetEntity = Address::class, cascade = [CascadeType.ALL])
         @JoinColumn(name = "address_uuid", referencedColumnName = "address_uuid")

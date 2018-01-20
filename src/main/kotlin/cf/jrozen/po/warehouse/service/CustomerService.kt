@@ -1,6 +1,8 @@
 package cf.jrozen.po.warehouse.service
 
 import cf.jrozen.po.warehouse.common.CustomerDeletionException
+import cf.jrozen.po.warehouse.controller.dto.CustomerDto
+import cf.jrozen.po.warehouse.controller.dto.CustomerMapper
 import cf.jrozen.po.warehouse.domain.Customer
 import cf.jrozen.po.warehouse.repository.CustomerRepository
 import org.springframework.stereotype.Service
@@ -8,14 +10,27 @@ import org.springframework.transaction.annotation.Transactional
 
 @Service
 @Transactional(readOnly = false)
-class CustomerService(val customerRepository: CustomerRepository) {
+class CustomerService(
+        val customerRepository: CustomerRepository,
+        val customerMapper: CustomerMapper
+) {
 
     /**
      * Adds a new [customer], or updates its data if it already exists.
      * @return the given [customer].
      */
-    fun saveCustomer(customer: Customer): Customer =
-            customerRepository.save(customer)
+    fun saveCustomer(customerDto: CustomerDto): Customer {
+        if (customerRepository.exists(customerDto.customerUuid))
+            throw IllegalStateException()
+        val newCustomer = customerMapper.createEntity(customerDto)
+        return customerRepository.save(newCustomer)
+    }
+
+    fun updateCustomer(customerDto: CustomerDto): Customer {
+        val customer = customerRepository.getOne(customerDto.customerUuid)
+        val updatedCustomer = customerMapper.updateEntity(customerDto, customer)
+        return customerRepository.save(updatedCustomer)
+    }
 
     /**
      * Finds the customer with the id number [customerId].

@@ -28,9 +28,11 @@ class WarehouseAppContext(
 
     @Bean
     fun corsConfigurer(): WebMvcConfigurer {
-        return object: WebMvcConfigurerAdapter(){
+        return object : WebMvcConfigurerAdapter() {
             override fun addCorsMappings(registry: CorsRegistry?) {
                 registry?.addMapping("/**")
+                        ?.allowedOrigins("*")
+                        ?.allowedMethods("*")
             }
         }
     }

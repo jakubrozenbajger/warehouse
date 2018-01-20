@@ -7,4 +7,5 @@ object ErrorKeys {
 
 object RestKeys {
     val ENTITY_NOT_FOUND: String = "ENTITY_NOT_FOUND"
+    val CANNOT_DELETE_CUSTOMER: String = "CANNOT_DELETE_CUSTOMER"
 }

@@ -13,19 +13,19 @@ class Address(
         val addressUuid: String = randomUUID(),
 
         @Column(name = "country")
-        val country: String,
+        var country: String,
 
         @Column(name = "city")
-        val city: String,
+        var city: String,
 
         @Column(name = "zip_code")
-        val zipCode: String,
+        var zipCode: String,
 
         @Column(name = "street")
-        val street: String,
+        var street: String,
 
         @Column(name = "local_number")
-        val localNumber: String
+        var localNumber: String
 
 ) {
     fun asString(): String {
