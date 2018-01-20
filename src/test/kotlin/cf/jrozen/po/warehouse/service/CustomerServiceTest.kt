@@ -11,12 +11,11 @@ import org.mockito.Mockito
 class CustomerServiceTest{
 
     var printer =  Mockito.mock(CustomerService::class.java)
-    val customer = rando
 
     @Test
     fun should(){
 
-        printer.saveCustomer(customer)
+
     }
 
 
