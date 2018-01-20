@@ -1,6 +1,8 @@
 package cf.jrozen.po.warehouse.service
 
 import cf.jrozen.po.warehouse.common.CustomerDeletionException
+import cf.jrozen.po.warehouse.common.ErrorKeys.ENTITY_ALREADY_EXISTS
+import cf.jrozen.po.warehouse.common.RequestValidationException
 import cf.jrozen.po.warehouse.controller.dto.CustomerDto
 import cf.jrozen.po.warehouse.controller.dto.CustomerMapper
 import cf.jrozen.po.warehouse.domain.Customer
@@ -20,8 +22,8 @@ class CustomerService(
      * @return the given [customer].
      */
     fun saveCustomer(customerDto: CustomerDto): Customer {
-        if (customerRepository.exists(customerDto.customerUuid))
-            throw IllegalStateException()
+        if (customerDto.customerUuid != null)
+            throw RequestValidationException("Customer exists", ENTITY_ALREADY_EXISTS)
         val newCustomer = customerMapper.createEntity(customerDto)
         return customerRepository.save(newCustomer)
     }

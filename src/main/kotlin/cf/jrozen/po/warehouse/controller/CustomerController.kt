@@ -1,5 +1,8 @@
 package cf.jrozen.po.warehouse.controller
 
+import cf.jrozen.po.warehouse.common.ErrorKeys
+import cf.jrozen.po.warehouse.common.ErrorKeys.NULL_CUSTOMERS_UUID
+import cf.jrozen.po.warehouse.common.RequestValidationException
 import cf.jrozen.po.warehouse.controller.dto.CustomerDto
 import cf.jrozen.po.warehouse.domain.Customer
 import cf.jrozen.po.warehouse.service.CustomerService
@@ -24,9 +27,9 @@ class CustomerController(
             customerService.getCustomer(customerUuid)
 
     @PutMapping
-    fun updateCustomer(@RequestBody customer: CustomerDto): Customer {
-        if (customer.customerUuid == null)
-            throw IllegalStateException()
+    fun updateCustomer(@RequestBody @Validated customer: CustomerDto): Customer {
+        customer.customerUuid ?:
+                throw RequestValidationException("Customer Uuid is null", NULL_CUSTOMERS_UUID)
         return customerService.updateCustomer(customer)
     }
 

@@ -1,6 +1,7 @@
 package cf.jrozen.po.warehouse
 
 import cf.jrozen.po.warehouse.common.CustomerDeletionException
+import cf.jrozen.po.warehouse.common.RequestValidationException
 import cf.jrozen.po.warehouse.common.RestKeys.CANNOT_DELETE_CUSTOMER
 import cf.jrozen.po.warehouse.common.RestKeys.ENTITY_NOT_FOUND
 import org.springframework.http.HttpStatus.BAD_REQUEST
@@ -30,5 +31,12 @@ class ExceptionHandler {
     fun handleCustomerDeletionException(ex: CustomerDeletionException): String {
         logger.warning(ex.toString())
         return CANNOT_DELETE_CUSTOMER
+    }
+
+    @ExceptionHandler(value = [RequestValidationException::class])
+    @ResponseStatus(BAD_REQUEST)
+    fun handleRequestValidationException(ex: RequestValidationException): String {
+        logger.warning(ex.toString())
+        return ex.restKey
     }
 }

@@ -18,6 +18,22 @@ class CustomerValidator : Validator {
                 errors?.reject("NULL_EMAIL")
             if (c.address == null)
                 errors?.reject("NULL_ADDRESS")
+            else {
+                if (c.address.city == null)
+                    errors?.reject("NULL_CITY")
+
+                if (c.address.localNumber == null)
+                    errors?.reject("NULL_CITY")
+
+                if (c.address.street == null)
+                    errors?.reject("NULL_STREET")
+
+                if (c.address.country == null)
+                    errors?.reject("NULL_COUNTRY")
+
+                if (c.address.zipCode == null)
+                    errors?.reject("NULL_ZIP_CODE")
+            }
         }
     }
 

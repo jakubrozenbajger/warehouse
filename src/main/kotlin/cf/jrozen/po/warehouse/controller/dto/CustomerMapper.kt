@@ -4,6 +4,7 @@ import cf.jrozen.po.warehouse.domain.Address
 import cf.jrozen.po.warehouse.domain.Customer
 import cf.jrozen.po.warehouse.utils.randomUUID
 import org.springframework.stereotype.Component
+import java.time.LocalDateTime
 
 @Component
 class CustomerMapper {
@@ -28,12 +29,12 @@ class CustomerMapper {
     }
 
     fun createEntity(customerDto: CustomerDto): Customer {
-        val customer = Customer(
+        return Customer(
                 customerUuid = randomUUID(),
                 name = customerDto.name,
                 email = customerDto.email,
                 description = customerDto.description,
-                creationDate = customerDto.creationDate,
+                creationDate = customerDto.creationDate ?: LocalDateTime.now(),
                 phoneNumber = customerDto.phoneNumber,
                 nip = customerDto.nip,
                 address = Address(
@@ -47,6 +48,5 @@ class CustomerMapper {
                 orders = HashSet(),
                 saleDocuments = HashSet()
         )
-        return customer
     }
 }
