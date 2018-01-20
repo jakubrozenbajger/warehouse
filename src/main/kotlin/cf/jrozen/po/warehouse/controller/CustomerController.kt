@@ -30,7 +30,8 @@ class CustomerController(
     fun getAllCustomers(): List<Customer> = customerService.getAllCustomers()
 
     /**
-     * Goes to database for [Customer] with a specific identifier in database
+     * Goes to database for [Customer] with a specific identifier [customerUuid] in database
+     * @param [customerUuid] is specific identifier
      * @return [Customer] in repository in JSON format
      */
     @GetMapping("/{customerUuid}")
@@ -39,6 +40,7 @@ class CustomerController(
 
     /**
      * Goes to database for specific [Customer] in database
+     * @param [customer] where the change is made
      * @return upgraded [Customer] in JSON format
      */
     @PutMapping
@@ -50,6 +52,7 @@ class CustomerController(
 
     /**
      * Saves [Customer] to repository
+     * @param [customer] which will be saved in the database
      * @return saved [Customer] in JSON format
      */
     @PostMapping
@@ -57,7 +60,11 @@ class CustomerController(
         return customerService.saveCustomer(customer)
     }
 
-
+    /**
+     * Deletes [Customer] with a specific identifier [customerUuid] from the repository
+     * @param [customerUuid] is specific identifier
+     * @return deleted [Customer] in JSON format
+     */
     @DeleteMapping("/{customerUuid}")
     fun deleteCustomer(@PathVariable customerUuid: String): Customer =
             customerService.deleteCustomer(customerUuid)
