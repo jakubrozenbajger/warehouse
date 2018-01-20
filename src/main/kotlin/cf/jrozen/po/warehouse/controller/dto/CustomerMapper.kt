@@ -13,8 +13,8 @@ class CustomerMapper {
             name?.let { customer.name = it }
             email?.let { customer.email = it }
             description.let { customer.description = it }
-            phoneNumber.let { customer.description = it }
-            nip.let { customer.description = it }
+            phoneNumber.let { customer.phoneNumber = it }
+            nip.let { customer.nip = it }
             address?.let {
                 with(it) {
                     localNumber?.let { customer.address.localNumber = localNumber }
