@@ -1,5 +1,7 @@
 package cf.jrozen.po.warehouse.service
 
+import cf.jrozen.po.warehouse.common.ErrorKeys.NULL_SALE_DOCUMENT_TYPE
+import cf.jrozen.po.warehouse.common.RequestValidationException
 import cf.jrozen.po.warehouse.domain.SaleDocumentType
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Lazy
@@ -21,6 +23,7 @@ class SaleDocumentBuilderFactory(
         return when (saleDocumentRequest.type) {
             SaleDocumentType.RECEIPT -> ReceiptBuilder(companyService, saleDocumentRequest)
             SaleDocumentType.INVOICE -> InvoiceBuilder(companyService, saleDocumentService, saleDocumentRequest)
+            null -> throw RequestValidationException("Cannot determine SaleDocumentType", NULL_SALE_DOCUMENT_TYPE)
         }
     }
 }

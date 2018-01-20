@@ -1,6 +1,13 @@
 package cf.jrozen.po.warehouse.controller
 
+import cf.jrozen.po.warehouse.common.ErrorKeys.NULL_ADDRESS
+import cf.jrozen.po.warehouse.common.ErrorKeys.NULL_CITY
+import cf.jrozen.po.warehouse.common.ErrorKeys.NULL_COUNTRY
 import cf.jrozen.po.warehouse.common.ErrorKeys.NULL_EMAIL
+import cf.jrozen.po.warehouse.common.ErrorKeys.NULL_LOCAL_NUMBER
+import cf.jrozen.po.warehouse.common.ErrorKeys.NULL_NAME
+import cf.jrozen.po.warehouse.common.ErrorKeys.NULL_STREET
+import cf.jrozen.po.warehouse.common.ErrorKeys.NULL_ZIP_CODE
 import cf.jrozen.po.warehouse.controller.dto.CustomerDto
 import cf.jrozen.po.warehouse.domain.Customer
 import org.springframework.stereotype.Component
@@ -13,26 +20,22 @@ class CustomerValidator : Validator {
     override fun validate(c: Any?, errors: Errors?) {
         if (c != null && c is CustomerDto) {
             if (c.name == null)
-                errors?.reject("NULL_NAME")
+                errors?.reject(NULL_NAME)
             if (c.address == null)
-                errors?.reject("NULL_EMAIL")
+                errors?.reject(NULL_EMAIL)
             if (c.address == null)
-                errors?.reject("NULL_ADDRESS")
+                errors?.reject(NULL_ADDRESS)
             else {
                 if (c.address.city == null)
-                    errors?.reject("NULL_CITY")
-
+                    errors?.reject(NULL_CITY)
                 if (c.address.localNumber == null)
-                    errors?.reject("NULL_CITY")
-
+                    errors?.reject(NULL_LOCAL_NUMBER)
                 if (c.address.street == null)
-                    errors?.reject("NULL_STREET")
-
+                    errors?.reject(NULL_STREET)
                 if (c.address.country == null)
-                    errors?.reject("NULL_COUNTRY")
-
+                    errors?.reject(NULL_COUNTRY)
                 if (c.address.zipCode == null)
-                    errors?.reject("NULL_ZIP_CODE")
+                    errors?.reject(NULL_ZIP_CODE)
             }
         }
     }

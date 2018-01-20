@@ -1,5 +1,6 @@
 package cf.jrozen.po.warehouse.controller
 
+import cf.jrozen.po.warehouse.common.ErrorKeys.NULL_SALE_DOCUMENT_TYPE
 import cf.jrozen.po.warehouse.common.ErrorKeys.WRONG_PAYMENT_DATE
 import cf.jrozen.po.warehouse.domain.SaleDocumentType
 import cf.jrozen.po.warehouse.service.SaleDocumentRequest
@@ -17,9 +18,12 @@ class SaleDocumentRequestValidator : Validator {
 
     override fun validate(saleDocumentReq: Any?, errors: Errors?) {
         if (saleDocumentReq != null && saleDocumentReq is SaleDocumentRequest) {
-            if (isDateInvalid(saleDocumentReq))
+            if (saleDocumentReq.type == null)
+                errors?.reject(NULL_SALE_DOCUMENT_TYPE)
+            if (saleDocumentReq.paymentDate == null)
+                errors?.reject("NULL_PAYMENT_DATE")
+            else if (isDateInvalid(saleDocumentReq))
                 errors?.reject(WRONG_PAYMENT_DATE)
-
         }
     }
 
