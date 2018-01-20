@@ -8,6 +8,9 @@ import org.springframework.validation.Errors
 import org.springframework.validation.Validator
 import java.time.LocalDateTime
 
+/**
+ * [SaleDocumentRequestValidator] is responsible for managing with [SaleDocumentRequest] entity
+ */
 @Component
 class SaleDocumentRequestValidator : Validator {
 
