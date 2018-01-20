@@ -14,14 +14,20 @@ import org.springframework.stereotype.Component
 import org.springframework.validation.Errors
 import org.springframework.validation.Validator
 
+/**
+ * [CustomerValidator] is responsible for managing with [Customer] entity
+ */
 @Component
 class CustomerValidator : Validator {
 
+    /**
+     * Validates [Customer]s data in database
+     */
     override fun validate(c: Any?, errors: Errors?) {
         if (c != null && c is CustomerDto) {
             if (c.name == null)
                 errors?.reject(NULL_NAME)
-            if (c.address == null)
+            if (c.email == null)
                 errors?.reject(NULL_EMAIL)
             if (c.address == null)
                 errors?.reject(NULL_ADDRESS)

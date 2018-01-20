@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.*
 import org.springframework.web.bind.WebDataBinder
 import org.springframework.web.bind.annotation.InitBinder
 
+/**
+ * [CustomerController] is responsible for managing with [Customer] entity
+ */
 @RestController
 @RequestMapping("/customers")
 class CustomerController(
@@ -19,13 +22,25 @@ class CustomerController(
         val customerValidator: CustomerValidator
 ) {
 
+    /**
+     * Goes to database for all [Customer]s in database
+     * @return all [Customer]s in repository in JSON format
+     */
     @GetMapping
     fun getAllCustomers(): List<Customer> = customerService.getAllCustomers()
 
+    /**
+     * Goes to database for [Customer] with a specific identifier in database
+     * @return [Customer] in repository in JSON format
+     */
     @GetMapping("/{customerUuid}")
     fun getCustomer(@PathVariable customerUuid: String): Customer =
             customerService.getCustomer(customerUuid)
 
+    /**
+     * Goes to database for specific [Customer] in database
+     * @return upgraded [Customer] in JSON format
+     */
     @PutMapping
     fun updateCustomer(@RequestBody @Validated customer: CustomerDto): Customer {
         customer.customerUuid ?:
@@ -33,6 +48,10 @@ class CustomerController(
         return customerService.updateCustomer(customer)
     }
 
+    /**
+     * Saves [Customer] to repository
+     * @return saved [Customer] in JSON format
+     */
     @PostMapping
     fun saveCustomer(@RequestBody @Validated customer: CustomerDto): Customer {
         return customerService.saveCustomer(customer)
