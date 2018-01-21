@@ -1,6 +1,6 @@
 buildscript {
 	ext {
-		kotlinVersion = '1.2.10'
+		kotlinVersion = '1.2.20'
 		dokka_version = '0.9.15'
 		springBootVersion = '1.5.9.RELEASE'
 	}
@@ -18,12 +18,13 @@ buildscript {
 	}
 }
 
+apply plugin: 'java'
 apply plugin: 'kotlin'
 apply plugin: 'kotlin-allopen'
 apply plugin: 'kotlin-spring'
 apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
-apply plugin: "kotlin-jpa"
+apply plugin: 'kotlin-jpa'
 apply plugin: 'jdepend'
 apply plugin: 'org.jetbrains.dokka'
 
