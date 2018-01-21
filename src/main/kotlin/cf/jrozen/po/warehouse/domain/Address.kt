@@ -6,6 +6,9 @@ import javax.persistence.Column
 import javax.persistence.Entity
 import javax.persistence.Id
 
+/**
+ * Address information
+ */
 @Entity
 class Address(
         @Id
@@ -28,6 +31,10 @@ class Address(
         var localNumber: String
 
 ) {
+    /**
+     * It prints the address data as a string
+     * @return address in the form of a string
+     */
     fun asString(): String {
         val sj = StringJoiner(", ")
         sj.add("$street $localNumber")

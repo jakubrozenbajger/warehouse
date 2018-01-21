@@ -7,6 +7,9 @@ import java.math.BigDecimal
 import java.time.LocalDateTime
 import javax.persistence.*
 
+/**
+ * Order data
+ */
 @Entity
 @Table(name = "orders")
 class Order(
@@ -39,11 +42,19 @@ class Order(
         var documentState: DocumentState = DocumentState.NEW
 
 ) {
+
+    /**
+     * Checks if the document can be generated
+     * @return the logical value of whether the document can be generated
+     */
     fun canGenerateSaleDocument(): Boolean {
         return this.documentState == DocumentState.ACCEPTED
     }
 }
 
+/**
+ * OrderPosition data
+ */
 @Entity
 @Table(name = "order_positions")
 class OrderPosition(
@@ -62,6 +73,9 @@ class OrderPosition(
         var rabat: Rabat?
 )
 
+/**
+ * Rabat data
+ */
 @Entity
 @Table(name = "rabats")
 class Rabat(
@@ -81,6 +95,9 @@ class Rabat(
         val percentageValue: BigDecimal?
 )
 
+/**
+ * Ware data
+ */
 @Entity
 @Table(name = "wares")
 class Ware(
@@ -109,6 +126,9 @@ class Ware(
 
 )
 
+/**
+ * Data about taxes
+ */
 @Entity
 @Table(name = "tax_groups")
 class TaxGroup(
@@ -133,7 +153,9 @@ class TaxGroup(
     }
 }
 
-
+/**
+ * Data about dimension
+ */
 @Embeddable
 class Dimension(
         val height: Double?,
@@ -141,6 +163,9 @@ class Dimension(
         val depth: Double?
 )
 
+/**
+ * Data about price
+ */
 @Embeddable
 class Price(
         val value: BigDecimal,

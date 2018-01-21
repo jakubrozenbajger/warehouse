@@ -14,10 +14,17 @@ interface FinanceProcessingStrategy {
     fun calculatePerTaxGroup(order: Order): Map<TaxGroup, List<BigDecimal>>
 }
 
+/**
+ * [DefaultFinanceProcessingStrategy] has methods that calculate the price of the order depending on the taxes
+ */
 @Component
 class DefaultFinanceProcessingStrategy : FinanceProcessingStrategy {
 
-
+    /**
+     * Groups [order] position due to tax
+     * @param [order] the order whose positions will be grouped
+     * @return collection where the tax value is the key and the value is the order position
+     */
     override fun calculatePerTaxGroup(order: Order): Map<TaxGroup, List<BigDecimal>> {
         val map = order.orderPosition.groupBy { op: OrderPosition -> op.ware.taxGroup }
         return map.mapValues { e ->
@@ -35,7 +42,10 @@ class DefaultFinanceProcessingStrategy : FinanceProcessingStrategy {
         return calculateNetPrice(op) + calculateVatPrice(op)
     }
 
-
+    /**
+     * Calculates the gross price of the order [o].
+     * @return the gross price of the order position.
+     */
     override fun calculateGrossPrice(o: Order): BigDecimal {
         return o.orderPosition.fold(BigDecimal.ZERO) {
             acc, op -> acc + calculateNetPrice(op) + calculateVatPrice(op)
@@ -72,6 +82,10 @@ class DefaultFinanceProcessingStrategy : FinanceProcessingStrategy {
     }
 }
 
+/**
+ * Adds two letters to each other
+ * @return list that is the sum of the given lists
+ */
 val columnReduceFunction = { acc: List<BigDecimal>, list: List<BigDecimal> ->
     listOf(
             acc[0] + list[0],
@@ -80,6 +94,10 @@ val columnReduceFunction = { acc: List<BigDecimal>, list: List<BigDecimal> ->
     )
 }
 
+/**
+ * Sums the columns of the given list
+ * @return list with summed columns
+ */
 fun columnSum(c: Collection<List<BigDecimal>>): List<BigDecimal> {
     return c.fold(listOf(BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO), columnReduceFunction)
 

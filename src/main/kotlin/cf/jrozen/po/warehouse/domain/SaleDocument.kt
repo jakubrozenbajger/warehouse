@@ -5,6 +5,9 @@ import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters
 import java.time.LocalDateTime
 import javax.persistence.*
 
+/**
+ * Data about sale document
+ */
 @Entity
 @DiscriminatorColumn(name = "sale_document_type")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
@@ -75,11 +78,16 @@ abstract class SaleDocument(
                 return saleDocumentId.hashCode()
         }
 }
-
+/**
+ * Contains sale document type statuses
+ */
 enum class SaleDocumentType {
     INVOICE, RECEIPT
 }
 
+/**
+ * Data about receipt
+ */
 @Entity
 @DiscriminatorValue(value = "RECEIPT")
 class Receipt(
@@ -109,6 +117,9 @@ class Receipt(
         supervisorDealers) {
 }
 
+/**
+ * Data about invoice
+ */
 @Entity
 @DiscriminatorValue(value = "INVOICE")
 class Invoice(

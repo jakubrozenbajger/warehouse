@@ -6,6 +6,13 @@ import org.springframework.stereotype.Service
 import cf.jrozen.po.warehouse.repository.SaleDocumentRepository
 import org.springframework.transaction.annotation.Transactional
 
+/**
+ * [SaleDocumentService] complements the generated invoice
+ * @property documentArchiveService allows archiving a sales document
+ * @property saleDocumentRepository allows access to sales documents
+ * @property saleDocumentBuilderFactory allows to build an invoice
+ * @property authService checks user authorization
+ */
 @Service
 @Transactional(readOnly = false)
 class SaleDocumentService(
@@ -27,6 +34,8 @@ class SaleDocumentService(
     /**
      * Creates a new sales document for the [order].
      * Additional information on the type of sales document are included in [saleDocumentRequest].
+     * @param [order] which the sales document will be generated
+     * @param [saleDocumentRequest] type of sales document
      * @return the sales document for the given order.
      */
     fun generateNewSaleDocument(order: Order, saleDocumentRequest: SaleDocumentRequest): SaleDocument {

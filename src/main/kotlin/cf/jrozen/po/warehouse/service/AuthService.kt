@@ -5,6 +5,10 @@ import cf.jrozen.po.warehouse.domain.Dealer
 import cf.jrozen.po.warehouse.domain.User
 import org.springframework.stereotype.Service
 
+/**
+ * [AuthService] allows to verify if the user is a dealer.
+ * @property userService enables users service
+ */
 @Service
 class AuthService(
         val userService: UserService
