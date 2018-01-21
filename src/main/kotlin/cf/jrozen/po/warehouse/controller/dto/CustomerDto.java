@@ -16,6 +16,8 @@ public class CustomerDto {
     private String nip;
     private AddressDto address;
 
+    public CustomerDto(){}
+
     public String getCustomerUuid() {
         return customerUuid;
     }
