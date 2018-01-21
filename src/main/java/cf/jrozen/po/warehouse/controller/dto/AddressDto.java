@@ -1,5 +1,8 @@
 package cf.jrozen.po.warehouse.controller.dto;
 
+/**
+ * [AddressDto] allows to create an address
+ */
 public class AddressDto {
     private String addressUuid;
     private String country;

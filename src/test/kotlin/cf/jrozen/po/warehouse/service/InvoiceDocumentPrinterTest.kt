@@ -15,8 +15,6 @@ class InvoiceDocumentPrinterTest {
         inv.order.orderPosition.add(randomOrderPosition())
 
 
-
-
         val printer = InvoiceDocumentPrinter(inv, DefaultFinanceProcessingStrategy())
         printer.printDocument()
 

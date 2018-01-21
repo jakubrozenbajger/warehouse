@@ -5,6 +5,9 @@ import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
 import javax.persistence.Convert;
 import java.time.LocalDateTime;
 
+/**
+ * [CustomerDto] allows to create and modify a customerdto
+ */
 public class CustomerDto {
     private String customerUuid;
     private String name;
