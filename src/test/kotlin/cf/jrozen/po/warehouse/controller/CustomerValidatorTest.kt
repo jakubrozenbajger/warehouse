@@ -28,7 +28,7 @@ class CustomerValidatorTest{
         }
         val error = BeanPropertyBindingResult(customer, "customer" )
         validator.validate(customer, error)
-        assert(error.errorCount == 0 )
+        assertEquals(error.errorCount , 0 )
     }
 
     @Test
@@ -45,6 +45,6 @@ class CustomerValidatorTest{
         }
         val error = BeanPropertyBindingResult(customer, "customer" )
         validator.validate(customer, error)
-        assert(error.errorCount == 1 )
+        assertEquals(error.errorCount,  1 )
     }
 }
