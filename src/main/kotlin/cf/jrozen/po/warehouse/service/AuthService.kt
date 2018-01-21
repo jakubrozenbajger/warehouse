@@ -6,7 +6,7 @@ import cf.jrozen.po.warehouse.domain.User
 import org.springframework.stereotype.Service
 
 /**
- * [AuthService] allows to return a dealer
+ * [AuthService] allows to verify if the user is a dealer.
  */
 @Service
 class AuthService(

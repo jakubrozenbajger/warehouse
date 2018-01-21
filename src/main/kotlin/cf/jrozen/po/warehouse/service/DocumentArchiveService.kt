@@ -5,6 +5,9 @@ import cf.jrozen.po.warehouse.repository.DocumentRepository
 import org.springframework.stereotype.Service
 import java.io.OutputStream
 
+/**
+ * [DocumentArchiveService] provides CRUD operations on clients.
+ */
 @Service
 class DocumentArchiveService(
         val documentRepository: DocumentRepository,

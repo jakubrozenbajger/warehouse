@@ -10,6 +10,9 @@ import cf.jrozen.po.warehouse.repository.CustomerRepository
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
+/**
+ * [CustomerService] provides CRUD operations on clients.
+ */
 @Service
 @Transactional(readOnly = false)
 class CustomerService(
@@ -18,8 +21,8 @@ class CustomerService(
 ) {
 
     /**
-     * Adds a new [customer], or updates its data if it already exists.
-     * @return the given [customer].
+     * Adds a new [customerDto], or updates its data if it already exists.
+     * @return the given [customerDto].
      */
     fun saveCustomer(customerDto: CustomerDto): Customer {
         if (customerDto.customerUuid != null)
