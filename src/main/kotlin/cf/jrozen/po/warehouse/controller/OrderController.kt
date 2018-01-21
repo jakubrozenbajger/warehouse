@@ -1,11 +1,13 @@
 package cf.jrozen.po.warehouse.controller
 
+import cf.jrozen.po.warehouse.common.RestKeys.PRICE
 import cf.jrozen.po.warehouse.domain.Order
 import cf.jrozen.po.warehouse.service.OrderService
 import cf.jrozen.po.warehouse.service.SaleDocumentRequest
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.WebDataBinder
 import org.springframework.web.bind.annotation.*
+import java.math.BigDecimal
 
 @RestController
 @RequestMapping("/orders")
@@ -21,6 +23,10 @@ class OrderController(
     fun getOrder(@PathVariable("orderId", required = true) orderId: String): Order =
             orderService.getOrder(orderId)
 
+    @GetMapping("/{orderId}/price")
+    fun getOrdersPricing(@PathVariable("orderId", required = true) orderId: String): Map<String, BigDecimal> =
+            mapOf(Pair(PRICE, orderService.getOrderSum(orderId)))
+
     @PutMapping("/{orderId}")
     fun updateOrder(@RequestBody orderId: Order): Order =
             orderService.updateOrder(orderId)
@@ -30,6 +36,12 @@ class OrderController(
             @PathVariable("orderId", required = true) orderId: String,
             @RequestBody @Validated saleDocumentRequest: SaleDocumentRequest): Order {
         return orderService.createSaleDocument(orderId, saleDocumentRequest)
+    }
+
+    @GetMapping("/{orderId}/sale-document")
+    fun getSaleDocument(
+            @PathVariable("orderId", required = true) orderId: String): Map<String, String?> {
+        return mapOf(Pair("saleDocumentId", orderService.getSaleDocumentId(orderId)))
     }
 
     @InitBinder("saleDocumentRequest")

@@ -10,6 +10,7 @@ interface FinanceProcessingStrategy {
     fun calculateNetPrice(op: OrderPosition): BigDecimal
     fun calculateVatPrice(op: OrderPosition): BigDecimal
     fun calculateGrossPrice(op: OrderPosition): BigDecimal
+    fun calculateGrossPrice(o: Order): BigDecimal
     fun calculatePerTaxGroup(order: Order): Map<TaxGroup, List<BigDecimal>>
 }
 
@@ -32,6 +33,13 @@ class DefaultFinanceProcessingStrategy : FinanceProcessingStrategy {
      */
     override fun calculateGrossPrice(op: OrderPosition): BigDecimal {
         return calculateNetPrice(op) + calculateVatPrice(op)
+    }
+
+
+    override fun calculateGrossPrice(o: Order): BigDecimal {
+        return o.orderPosition.fold(BigDecimal.ZERO) {
+            acc, op -> acc + calculateNetPrice(op) + calculateVatPrice(op)
+        }
     }
 
     /**

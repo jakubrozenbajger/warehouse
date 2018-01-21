@@ -4,14 +4,19 @@ import cf.jrozen.po.warehouse.domain.DocumentState
 import cf.jrozen.po.warehouse.domain.Order
 import cf.jrozen.po.warehouse.domain.SaleDocumentType
 import cf.jrozen.po.warehouse.repository.OrderRepository
+import cf.jrozen.po.warehouse.repository.SaleDocumentRepository
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import java.math.BigDecimal
 
 @Service
 @Transactional(readOnly = false)
 class OrderService(
         val orderRepository: OrderRepository,
-        val saleDocumentService: SaleDocumentService) {
+        val saleDocumentService: SaleDocumentService,
+        val financeProcessingStrategy: FinanceProcessingStrategy,
+        val saleDocumentRepository: SaleDocumentRepository
+) {
 
     /**
      * Retrieves all orders from the repository.
@@ -26,6 +31,12 @@ class OrderService(
      */
     @Transactional(readOnly = true)
     fun getOrder(orderId: String): Order = orderRepository.getOne(orderId)
+
+    @Transactional(readOnly = true)
+    fun getOrderSum(orderId: String): BigDecimal {
+        val order = orderRepository.getOne(orderId)
+        return financeProcessingStrategy.calculateGrossPrice(order)
+    }
 
     /**
      * Updates changes in a given [order].
@@ -51,6 +62,10 @@ class OrderService(
         order.documentState = DocumentState.REALIZED
         orderRepository.save(order)
         return order
+    }
+
+    fun getSaleDocumentId(orderId: String): String? {
+        return saleDocumentRepository.getOrdersSaleDocumentId(orderId)
     }
 
 }
