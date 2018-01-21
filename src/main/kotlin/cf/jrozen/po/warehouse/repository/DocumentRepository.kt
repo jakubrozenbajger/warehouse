@@ -11,6 +11,9 @@ abstract class DocumentRepository {
     abstract fun saveDocument(name: String, sd: OutputStream)
 }
 
+/**
+ * [S3DocumentRepository] stores documents
+ */
 @Repository
 class S3DocumentRepository : DocumentRepository() {
 
@@ -20,6 +23,9 @@ class S3DocumentRepository : DocumentRepository() {
     }
 }
 
+/**
+ * [FileSystemDocumentRepository] stores system data file
+ */
 @Repository
 class FileSystemDocumentRepository : DocumentRepository() {
     override fun saveDocument(name: String, sd: OutputStream) {

@@ -27,10 +27,9 @@ class CustomerServiceTest : AbstractDatabaseTest() {
     }
 
     @Test
-    fun shouldAddNewCustomer() {
+    fun canDeleteCustomer() {
 
         customerRepository.save(customer)
-
 //        var list = customerService.getAllCustomers()
 //        assertTrue(list[0].customerUuid == customer.customerUuid)
         if (customer.canBeDeleted()) {
@@ -38,8 +37,21 @@ class CustomerServiceTest : AbstractDatabaseTest() {
             var list = customerService.getAllCustomers()
             assertFalse(list.contains(customer))
         }
-
-
     }
+
+    @Test
+    fun canDeleteTheSameTwice() {
+
+        customerRepository.save(customer)
+
+        customer.canBeDeleted()
+
+        if (customer.canBeDeleted()) {
+            customerService.deleteCustomer(id)
+            customerService.deleteCustomer(id)
+        }
+    }
+
+
 
 }

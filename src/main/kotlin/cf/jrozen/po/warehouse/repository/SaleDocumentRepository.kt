@@ -6,6 +6,9 @@ import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.query.Param
 import org.springframework.stereotype.Repository
 
+/**
+ * [SaleDocumentRepository] stores data about sale documents
+ */
 @Repository
 interface SaleDocumentRepository : JpaRepository<SaleDocument, String> {
 
