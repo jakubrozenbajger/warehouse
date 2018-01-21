@@ -1,6 +1,5 @@
 package cf.jrozen.po.warehouse.service
 
-import cf.jrozen.po.warehouse.common.CustomerDeletionException
 import cf.jrozen.po.warehouse.controller.dto.CustomerDto
 import cf.jrozen.po.warehouse.controller.dto.CustomerMapper
 import cf.jrozen.po.warehouse.domain.Address
@@ -20,6 +19,7 @@ import org.junit.Before
 import org.junit.Test
 import org.mockito.Mockito
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.orm.jpa.JpaObjectRetrievalFailureException
 import java.time.LocalDateTime
 import javax.persistence.EntityNotFoundException
 
@@ -56,7 +56,7 @@ class CustomerServiceTest : AbstractDatabaseTest() {
         }
     }
 
-    @Test
+    @Test(expected = JpaObjectRetrievalFailureException::class)
     fun canDeleteTheSameTwice() {
 
         customerRepository.save(customer)
@@ -64,12 +64,7 @@ class CustomerServiceTest : AbstractDatabaseTest() {
 
         assertFalse(customerRepository.exists(customer.customerUuid))
 
-        try {
-            customerService.deleteCustomer(id)
-        } catch (e: Exception) {
-            assert(e.cause is EntityNotFoundException)
-        }
-
+        customerService.deleteCustomer(id)
     }
 
     @Test
@@ -82,14 +77,14 @@ class CustomerServiceTest : AbstractDatabaseTest() {
                 custom
         )
 
+
         customerRepository.save(custom)
         orderRepository.save(order)
 
-
         try {
-            customerService.deleteCustomer(custom.customerUuid)
+            customerService.deleteCustomer(id)
         } catch (e: Exception) {
-            assert(e.cause is CustomerDeletionException)
+            assert(e.cause is EntityNotFoundException)
         }
 
     }
