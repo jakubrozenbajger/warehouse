@@ -16,7 +16,9 @@ import org.springframework.web.context.WebApplicationContext
 @ActiveProfiles("test")
 abstract class AbstractControllerTest {
 
+    @Autowired
     private lateinit var wap: WebApplicationContext
+
     protected lateinit var mockMvc: MockMvc
 
     @Before
