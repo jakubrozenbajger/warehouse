@@ -1,5 +1,6 @@
 package cf.jrozen.po.warehouse.controller
 
+import cf.jrozen.po.warehouse.domain.Order
 import cf.jrozen.po.warehouse.service.SaleDocumentService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -8,6 +9,9 @@ import org.springframework.http.MediaType
 import org.springframework.web.bind.annotation.*
 
 
+/**
+ * [SaleDocumentController] is responsible for managing with [SaleDocument] entity
+ */
 @RestController
 @RequestMapping("/sale-documents")
 class SaleDocumentController(

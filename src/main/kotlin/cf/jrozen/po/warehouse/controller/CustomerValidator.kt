@@ -14,18 +14,27 @@ import org.springframework.stereotype.Component
 import org.springframework.validation.Errors
 import org.springframework.validation.Validator
 
+/**
+ * [CustomerValidator] is responsible for managing with [Customer] entity
+ */
 @Component
 class CustomerValidator : Validator {
 
+    /**
+     * Validates [Customer]s data in database
+     * @param c is a customer to be checked
+     * @param c exception that will be used when an error occurs
+     */
     override fun validate(c: Any?, errors: Errors?) {
         if (c != null && c is CustomerDto) {
             if (c.name == null)
                 errors?.reject(NULL_NAME)
-            if (c.address == null)
+            if (c.email == null)
                 errors?.reject(NULL_EMAIL)
-            if (c.address == null)
+
+            if (c.address == null) {
                 errors?.reject(NULL_ADDRESS)
-            else {
+            } else {
                 if (c.address.city == null)
                     errors?.reject(NULL_CITY)
                 if (c.address.localNumber == null)
@@ -40,6 +49,10 @@ class CustomerValidator : Validator {
         }
     }
 
+    /**
+     * Checks if the class [clazz] can be assigned to a class CustomerDto
+     * @param clazz is a class that will be checked
+     */
     override fun supports(clazz: Class<*>?): Boolean {
         return clazz?.isAssignableFrom(CustomerDto::class.java) ?: false
     }
