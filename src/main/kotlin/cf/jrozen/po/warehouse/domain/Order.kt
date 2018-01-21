@@ -170,5 +170,9 @@ class Dimension(
 class Price(
         val value: BigDecimal,
         val currency: String
-)
+){
+    override fun toString(): String {
+        return "$value '$currency'"
+    }
+}
 

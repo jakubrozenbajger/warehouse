@@ -5,7 +5,7 @@ import java.io.ByteArrayOutputStream
 import java.io.OutputStream
 
 interface DocumentPrinter {
-    fun printDocument(): OutputStream
+    fun printDocument(): ByteArrayOutputStream
 }
 
 
@@ -27,8 +27,7 @@ class ReceiptDocumentPrinter(
      * Allows to print a receipt by returning the stream
      * @return stream of bytes to print the receipt
      */
-    override fun printDocument(): OutputStream {
-        val baos = ByteArrayOutputStream()
-        return baos
+    override fun printDocument(): ByteArrayOutputStream {
+        TODO()
     }
 }

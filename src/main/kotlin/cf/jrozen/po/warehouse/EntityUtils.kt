@@ -53,7 +53,7 @@ fun randomDate(): LocalDateTime {
     return LocalDateTime.now().minusSeconds(RandomUtils.nextLong(0, 1000000L))
 }
 
-fun randomInvoice(): Invoice {
+fun randomInvoice(order: Order = randomOrder()): Invoice {
     return Invoice(
             randomUUID(),
             randomDate(),
@@ -62,7 +62,7 @@ fun randomInvoice(): Invoice {
             randomAlphanumeric(),
             randomDescription(),
             randomAddress(),
-            randomOrder(),
+            order,
             randomCustomer(),
             randomDealer(),
             HashSet(),
@@ -163,10 +163,10 @@ fun randomBigDecimal(min: Double = 0.1): BigDecimal {
 }
 
 
-fun randomDescription():String {
+fun randomDescription(): String {
     val stringBuilder = StringBuilder()
     for (i in 1..40) {
-        stringBuilder.append(RandomStringUtils.randomAlphabetic(0,RandomUtils.nextInt(0,12)) + " ")
+        stringBuilder.append(RandomStringUtils.randomAlphabetic(0, RandomUtils.nextInt(0, 12)) + " ")
     }
     return stringBuilder.toString()
 }

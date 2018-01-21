@@ -3,11 +3,12 @@ package cf.jrozen.po.warehouse.service
 import cf.jrozen.po.warehouse.domain.Invoice
 import cf.jrozen.po.warehouse.domain.Order
 import cf.jrozen.po.warehouse.domain.OrderPosition
-import com.itextpdf.text.Element
-import com.itextpdf.text.Phrase
+import com.itextpdf.text.*
 import com.itextpdf.text.pdf.PdfPCell
 import com.itextpdf.text.pdf.PdfPTable
+import com.itextpdf.text.pdf.PdfWriter
 import java.io.ByteArrayOutputStream
+import java.io.FileOutputStream
 import java.io.OutputStream
 import java.util.concurrent.atomic.AtomicInteger
 
@@ -21,14 +22,44 @@ class InvoiceDocumentPrinter(
         financeProcessingStrategy: FinanceProcessingStrategy
 ) : AbstractDocumentPrinter(financeProcessingStrategy) {
 
+    val font = Font(Font.FontFamily.TIMES_ROMAN, 10f,
+            Font.NORMAL, BaseColor.BLACK);
+
     private var lp: AtomicInteger = resetLp()
 
     /**
      * Completes the generated invoice with data
      * @return stream of bytes prepared for the data
      */
-    override fun printDocument(): OutputStream {
+    override fun printDocument(): ByteArrayOutputStream {
         val baos = ByteArrayOutputStream()
+        val document = Document()
+        PdfWriter.getInstance(document, baos)// FileOutputStream(FILE))
+
+        document.open()
+        document.add(Chunk(""))
+        addMetadata(document)
+
+        val font = Font(Font.FontFamily.TIMES_ROMAN, 12f,
+                Font.NORMAL, BaseColor.BLACK);
+
+        var anchor = Anchor("First Chapter", font)
+        anchor.name = "First Chapter"
+
+        // Second parameter is the number of the chapter
+        var catPart = Chapter(Paragraph(anchor), 1)
+
+        var subPara = Paragraph("Subcategory 1", font)
+        var subCatPart = catPart.addSection(subPara)
+        subCatPart.add(Paragraph("Hello"))
+
+        subPara = Paragraph("Subcategory 2", font)
+        subCatPart = catPart.addSection(subPara)
+
+        val paragraph = Paragraph()
+        subCatPart.add(paragraph)
+
+        // add a table
 
 
         // order table
@@ -41,9 +72,22 @@ class InvoiceDocumentPrinter(
         val vatTable = InvoiceDocumentTemplate.vatTable()
         fillVatInfo(invoice.order, vatTable)
 
+        subCatPart.add(orderTable)
+        subCatPart.add(vatTable)
+        document.add(subCatPart)
+
+        document.close()
 
         resetLp()
         return baos
+    }
+
+    private fun addMetadata(document: Document) {
+        document.addTitle("INVOICE" + invoice.serialNumber)
+        document.addSubject("Invoice")
+        document.addKeywords("Sale document, Invoice")
+        document.addAuthor("Sezam")
+        document.addCreator("Sezam")
     }
 
     private fun resetLp(): AtomicInteger {
@@ -56,17 +100,17 @@ class InvoiceDocumentPrinter(
         val cells = financeProcessingStrategy.calculatePerTaxGroup(order)
 
         cells.entries.forEach {
-            vatTable.addCell(it.key.taxAmount.toString())
+            vatTable.addCell(Phrase(it.key.taxAmount.toString(), font))
             it.value.forEach { bd ->
-                vatTable.addCell(bd.toString())
+                vatTable.addCell(Phrase(bd.toString(),font))
             }
         }
 
         // sum footer
-        vatTable.addCell(InvoiceDocumentTemplate.SUM_CELL_NAME)
+        vatTable.addCell(Phrase(InvoiceDocumentTemplate.SUM_CELL_NAME, font))
 
         val sum = columnSum(cells.values)//.fold(listOf(BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO), columnReduceFunction)
-        sum.forEach { vatTable.addCell(it.toString()) }
+        sum.forEach { vatTable.addCell(Phrase(it.toString(),font)) }
 
     }
 
@@ -75,13 +119,14 @@ class InvoiceDocumentPrinter(
             op: OrderPosition,
             t: PdfPTable,
             propsExtractor: (OrderPosition) -> List<String>) {
-        propsExtractor(op).forEach { t.addCell(it) }
+        propsExtractor(op).forEach { t.addCell(Phrase(it, font)) }
     }
 
     private fun extractOrderPositionProperties(op: OrderPosition): List<String> {
         return listOf(
                 lp.getAndIncrement().toString(),
                 op.ware.name,
+                "szt",
                 op.amount.toString(),
                 op.ware.price.toString(),
                 op.ware.taxGroup.taxAmount.toString(),

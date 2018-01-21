@@ -1,23 +1,25 @@
 package cf.jrozen.po.warehouse.repository
 
-import org.springframework.stereotype.Repository
-import java.io.OutputStream
+import java.io.*
 import java.util.logging.Logger
 
 abstract class DocumentRepository {
 
     val logger: Logger = Logger.getLogger(this.javaClass.simpleName)
 
-    abstract fun saveDocument(name: String, sd: OutputStream)
+    abstract fun saveDocument(name: String, sd: ByteArrayOutputStream)
+    abstract fun getDocument(name: String): FileInputStream
 }
 
 /**
  * [S3DocumentRepository] stores documents
  */
-@Repository
 class S3DocumentRepository : DocumentRepository() {
+    override fun getDocument(name: String): FileInputStream {
+        TODO("not implemented")
+    }
 
-    override fun saveDocument(name: String, sd: OutputStream) {
+    override fun saveDocument(name: String, sd: ByteArrayOutputStream) {
         logger.info("Saving document to cloud repository")
 
     }
@@ -26,11 +28,21 @@ class S3DocumentRepository : DocumentRepository() {
 /**
  * [FileSystemDocumentRepository] stores system data file
  */
-@Repository
 class FileSystemDocumentRepository : DocumentRepository() {
-    override fun saveDocument(name: String, sd: OutputStream) {
+    override fun saveDocument(name: String, sd: ByteArrayOutputStream) {
         logger.info("Saving document to file system repository")
+        val file = File("/tmp/$name.pdf")
+        val fos = FileOutputStream(file)
+        file.createNewFile()
+        sd.writeTo(fos)
+        sd.close()
+        fos.close()
+    }
 
+    override fun getDocument(name: String): FileInputStream {
+        logger.info("Getting document from file system repository")
+        val file = File("/tmp/$name.pdf")
+        return FileInputStream(file)
     }
 }
 

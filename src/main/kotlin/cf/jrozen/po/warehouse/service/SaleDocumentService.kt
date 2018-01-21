@@ -5,6 +5,7 @@ import cf.jrozen.po.warehouse.domain.SaleDocument
 import org.springframework.stereotype.Service
 import cf.jrozen.po.warehouse.repository.SaleDocumentRepository
 import org.springframework.transaction.annotation.Transactional
+import java.io.FileInputStream
 
 /**
  * [SaleDocumentService] complements the generated invoice
