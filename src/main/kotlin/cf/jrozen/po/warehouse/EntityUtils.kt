@@ -12,7 +12,7 @@ fun randomCustomer(): Customer {
             randomUUID(),
             randomAlphanumeric(),
             randomEmail(),
-            randomAlphanumeric(),
+            randomDescription(),
             randomDate(),
             randomPhoneNumber(),
             randomNip(),
@@ -60,7 +60,7 @@ fun randomInvoice(): Invoice {
             randomDate(),
             randomAlphanumeric(),
             randomAlphanumeric(),
-            randomAlphanumeric(),
+            randomDescription(),
             randomAddress(),
             randomOrder(),
             randomCustomer(),
@@ -77,7 +77,7 @@ fun randomReceipt(): Receipt {
             randomDate(),
             randomAlphanumeric(),
             randomAlphanumeric(),
-            randomAlphanumeric(),
+            randomDescription(),
             randomAddress(),
             randomOrder(),
             randomCustomer(),
@@ -102,7 +102,7 @@ fun randomOrder(dealer: Dealer = randomDealer(),
     return Order(
             randomUUID(),
             dealer,
-            randomAlphanumeric(),
+            randomDescription(),
             customer,
             randomDate(),
             orderPositions,
@@ -123,7 +123,7 @@ fun randomWare(): Ware {
     return Ware(
             randomUUID(),
             randomAlphanumeric(),
-            randomAlphanumeric(),
+            randomDescription(),
             randomDimension(),
             randomDouble(),
             randomPrice(),
@@ -162,4 +162,12 @@ fun randomBigDecimal(min: Double = 0.1): BigDecimal {
     return BigDecimal(randomDouble(min).toString())
 }
 
+
+fun randomDescription():String {
+    val stringBuilder = StringBuilder()
+    for (i in 1..40) {
+        stringBuilder.append(RandomStringUtils.randomAlphabetic(0,RandomUtils.nextInt(0,12)) + " ")
+    }
+    return stringBuilder.toString()
+}
 
