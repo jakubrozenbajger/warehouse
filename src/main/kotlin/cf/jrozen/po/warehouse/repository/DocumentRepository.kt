@@ -8,14 +8,14 @@ abstract class DocumentRepository {
     val logger: Logger = Logger.getLogger(this.javaClass.simpleName)
 
     abstract fun saveDocument(name: String, sd: ByteArrayOutputStream)
-    abstract fun getDocument(name: String): FileInputStream
+    abstract fun getDocument(name: String): ByteArray
 }
 
 /**
  * [S3DocumentRepository] stores documents
  */
 class S3DocumentRepository : DocumentRepository() {
-    override fun getDocument(name: String): FileInputStream {
+    override fun getDocument(name: String): ByteArray {
         TODO("not implemented")
     }
 
@@ -39,10 +39,10 @@ class FileSystemDocumentRepository : DocumentRepository() {
         fos.close()
     }
 
-    override fun getDocument(name: String): FileInputStream {
+    override fun getDocument(name: String): ByteArray {
         logger.info("Getting document from file system repository")
-        val file = File("/tmp/$name.pdf")
-        return FileInputStream(file)
+        val file = java.io.File("/tmp/$name.pdf")
+        return java.io.FileInputStream(file).readBytes()
     }
 }
 

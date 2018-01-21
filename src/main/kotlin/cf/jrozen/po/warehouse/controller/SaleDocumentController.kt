@@ -28,13 +28,13 @@ class SaleDocumentController(
      */
     @GetMapping("/{uuid}")
     fun getSaleDocument(@PathVariable(value = "uuid") uuid: String): ResponseEntity<ByteArray> {
-        val saleDocument: FileInputStream = documentRepository.getDocument(uuid)
+        val saleDocument = documentRepository.getDocument(uuid)
         val headers = HttpHeaders()
         headers.contentType = MediaType.APPLICATION_PDF
         val filename = "$uuid.pdf"
         headers.setContentDispositionFormData(filename, filename)
         headers.cacheControl = "must-revalidate, post-check=0, pre-check=0"
         println("Sending file")
-        return ResponseEntity(saleDocument.readAllBytes(), headers, HttpStatus.OK)
+        return ResponseEntity(saleDocument, headers, HttpStatus.OK)
     }
 }

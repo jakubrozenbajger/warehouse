@@ -18,6 +18,8 @@ class InvoiceDocumentPrinterTest {
         val printer = InvoiceDocumentPrinter(inv, DefaultFinanceProcessingStrategy())
         printer.printDocument()
 
+        //thenShouldNotFail
+
     }
 
 }
