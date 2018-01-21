@@ -5,7 +5,7 @@ import cf.jrozen.po.warehouse.service.SaleDocumentService
 import org.springframework.web.bind.annotation.RestController
 
 /**
- * [SaleDocumentController] is responsible for managing with [SaleDocument] entity
+ * [SaleDocumentController] is responsible for managing with [SaleDocumentService] entity
  */
 @RestController
 class SaleDocumentController(

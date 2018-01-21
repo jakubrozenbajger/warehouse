@@ -5,6 +5,9 @@ import cf.jrozen.po.warehouse.domain.Dealer
 import cf.jrozen.po.warehouse.domain.User
 import org.springframework.stereotype.Service
 
+/**
+ * [AuthService] allows to return a dealer
+ */
 @Service
 class AuthService(
         val userService: UserService

@@ -9,6 +9,9 @@ import java.time.LocalDateTime
 import javax.persistence.*
 import javax.validation.constraints.Pattern
 
+/**
+ * Customer information
+ */
 @Entity
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator::class, property = "customerUuid")
 class Customer(
@@ -52,8 +55,11 @@ class Customer(
         @JsonIgnore
         val saleDocuments: MutableSet<SaleDocument> = HashSet()
 ) {
-
-    fun canBeDeleted(): Boolean {
+        /**
+         * Checks if the client can be deleted
+         * @return the logical value of whether the client can be deleted
+         */
+        fun canBeDeleted(): Boolean {
         return orders.isEmpty() && saleDocuments.isEmpty()
     }
 

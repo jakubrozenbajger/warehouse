@@ -4,6 +4,9 @@ import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters
 import java.time.LocalDateTime
 import javax.persistence.*
 
+/**
+ * User's details
+ */
 @MappedSuperclass
 @Inheritance
 abstract class User(
@@ -29,6 +32,9 @@ abstract class User(
 )
 
 
+/**
+ * Dealer's details
+ */
 @Entity
 @Table(name = "dealers")
 class Dealer(
