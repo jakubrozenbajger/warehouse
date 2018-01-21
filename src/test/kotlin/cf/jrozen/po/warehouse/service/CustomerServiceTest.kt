@@ -6,10 +6,7 @@ import cf.jrozen.po.warehouse.controller.dto.CustomerMapper
 import cf.jrozen.po.warehouse.domain.Address
 import cf.jrozen.po.warehouse.domain.Customer
 import cf.jrozen.po.warehouse.domain.Dealer
-import cf.jrozen.po.warehouse.repository.AbstractDatabaseTest
-import cf.jrozen.po.warehouse.repository.CustomerRepository
-import cf.jrozen.po.warehouse.repository.OrderRepository
-import cf.jrozen.po.warehouse.repository.SaleDocumentRepository
+import cf.jrozen.po.warehouse.repository.*
 import cf.jrozen.po.warehouse.testutils.randomCustomer
 import cf.jrozen.po.warehouse.testutils.randomDealer
 import cf.jrozen.po.warehouse.testutils.randomOrderPosition
@@ -30,6 +27,9 @@ class CustomerServiceTest : AbstractDatabaseTest() {
 
     @Autowired
     lateinit var orderRepository: OrderRepository
+
+    @Autowired
+    lateinit var userRepository: UserRepository
 
     lateinit var orderService: OrderService
     lateinit var customerService: CustomerService
@@ -72,26 +72,24 @@ class CustomerServiceTest : AbstractDatabaseTest() {
 
     }
 
-    @Test
+    @Test(expected = CustomerDeletionException::class)
     fun cantDeleteCustomerWithCommitment() {
+        //given
         val custom = randomCustomer()
+        val dealer = randomDealer()
         val order = cf.jrozen.po.warehouse.domain.Order(
                 "id",
-                randomDealer(),
+                dealer,
                 "descript",
                 custom
         )
-
-
+        custom.orders.add(order)
+        userRepository.save(dealer)
         customerRepository.save(custom)
         orderRepository.save(order)
 
-        try {
-            customerService.deleteCustomer(custom.customerUuid)
-        } catch (e: Exception) {
-            assert(e.cause is CustomerDeletionException)
-        }
-
+        //when
+        customerService.deleteCustomer(custom.customerUuid)
     }
 
 }
