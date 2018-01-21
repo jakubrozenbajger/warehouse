@@ -47,7 +47,7 @@ class OrderService(
      */
     @Transactional(readOnly = true)
     fun getOrderSum(orderId: String): BigDecimal {
-        val order = orderRepository.getOne(orderId)
+        val order = getOrder(orderId)
         return financeProcessingStrategy.calculateGrossPrice(order)
     }
 
