@@ -7,6 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Lazy
 import org.springframework.stereotype.Component
 
+/**
+ * [SaleDocumentBuilderFactory] allows you to create a sales document
+ * @property companyService provides company information
+ */
 @Component
 class SaleDocumentBuilderFactory(
         val companyService: CompanyService

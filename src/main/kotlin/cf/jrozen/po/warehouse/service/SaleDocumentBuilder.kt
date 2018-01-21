@@ -51,6 +51,12 @@ abstract class AbstractSaleDocumentBuilder(
     }
 }
 
+/**
+ * [InvoiceBuilder] complements the generated invoice
+ * @property companyService provides company information
+ * @property saleDocumentService allows to create a new sales document
+ * @property saleDocumentRequest stores data about the sales document
+ */
 class InvoiceBuilder(
         companyService: CompanyService,
         private val saleDocumentService: SaleDocumentService,
@@ -80,6 +86,11 @@ class InvoiceBuilder(
 
 }
 
+/**
+ * [InvoiceBuilder] complements the generated invoice
+ * @property companyService provides company information
+ * @property saleDocumentRequest stores data about the sales document
+ */
 class ReceiptBuilder(
         companyService: CompanyService,
         saleDocumentRequest: SaleDocumentRequest

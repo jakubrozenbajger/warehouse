@@ -11,6 +11,11 @@ import java.io.ByteArrayOutputStream
 import java.io.OutputStream
 import java.util.concurrent.atomic.AtomicInteger
 
+/**
+ * [InvoiceDocumentPrinter] allows to print invoice
+ * @property invoice evidence of sale to be printed
+ * @property financeProcessingStrategy calculates the prices of goods depending on taxes
+ */
 class InvoiceDocumentPrinter(
         private val invoice: Invoice,
         financeProcessingStrategy: FinanceProcessingStrategy
@@ -18,7 +23,10 @@ class InvoiceDocumentPrinter(
 
     private var lp: AtomicInteger = resetLp()
 
-
+    /**
+     * Completes the generated invoice with data
+     * @return stream of bytes prepared for the data
+     */
     override fun printDocument(): OutputStream {
         val baos = ByteArrayOutputStream()
 

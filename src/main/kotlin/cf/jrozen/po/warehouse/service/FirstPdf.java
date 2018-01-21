@@ -20,7 +20,9 @@ import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 
-
+/**
+ * [FirstPdf] has methods that apply data to the generated sales document
+ */
 public class FirstPdf {
     private static String FILE = "/tmp/FirstPdf.pdf";
     private static Font catFont = new Font(Font.FontFamily.TIMES_ROMAN, 18,
