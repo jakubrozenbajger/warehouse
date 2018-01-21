@@ -82,9 +82,9 @@ class CustomerServiceTest : AbstractDatabaseTest() {
                 custom
         )
 
-
         customerRepository.save(custom)
         orderRepository.save(order)
+
 
         try {
             customerService.deleteCustomer(custom.customerUuid)
