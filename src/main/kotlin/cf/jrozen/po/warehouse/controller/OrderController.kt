@@ -11,6 +11,8 @@ import java.math.BigDecimal
 
 /**
  * [OrderController] is responsible for managing with [Order] entity
+ * @property orderService enables order service
+ * @property saleDocumentRequestValidator allows validation of the request to print a sales document
  */
 @RestController
 @RequestMapping("/orders")

@@ -7,6 +7,8 @@ import java.io.OutputStream
 
 /**
  * [DocumentArchiveService] provides CRUD operations on clients.
+ * @property documentRepository allows to use the collection of sales documents
+ * @property documentPrinterFactory allows to print sales documents
  */
 @Service
 class DocumentArchiveService(

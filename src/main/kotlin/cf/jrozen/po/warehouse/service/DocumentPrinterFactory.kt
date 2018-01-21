@@ -7,6 +7,10 @@ import cf.jrozen.po.warehouse.common.InvalidSaleDocumentException
 import org.springframework.stereotype.Component
 
 @Component
+/**
+ * [DocumentPrinterFactory] allows to print sales document
+ * @property financeProcessingStrategy calculates the prices of goods depending on taxes
+ */
 class DocumentPrinterFactory(
         val financeProcessingStrategy: FinanceProcessingStrategy
 )

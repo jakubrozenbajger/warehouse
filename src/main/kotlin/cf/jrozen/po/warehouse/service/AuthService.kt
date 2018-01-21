@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service
 
 /**
  * [AuthService] allows to verify if the user is a dealer.
+ * @property userService enables users service
  */
 @Service
 class AuthService(

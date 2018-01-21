@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RestController
 
 /**
  * [UserController] is responsible for managing with [UserService] entity
+ * @property userService enables users service
  */
 @RestController
 class UserController(

@@ -1,13 +1,23 @@
 package cf.jrozen.po.warehouse.controller.dto
 
+import cf.jrozen.po.warehouse.controller.CustomerController
 import cf.jrozen.po.warehouse.domain.Address
 import cf.jrozen.po.warehouse.domain.Customer
 import cf.jrozen.po.warehouse.utils.randomUUID
 import org.springframework.stereotype.Component
 import java.time.LocalDateTime
 
+/**
+ * [CustomerMapper] is responsible for managing with [Customer] entity
+ */
 @Component
 class CustomerMapper {
+    /**
+     * Updates the [customerDto] to the [customer]
+     * @param customerDto the client from whom the values will be collected
+     * @param customer to whom we assign the customerDto values
+     * @return updated customer
+     */
     fun updateEntity(customerDto: CustomerDto, customer: Customer): Customer {
         with(customerDto) {
             name?.let { customer.name = it }
@@ -28,6 +38,11 @@ class CustomerMapper {
         return customer
     }
 
+    /**
+     * Creates a new [Customer]  from the [customerDto]
+     * @param customerDto the client from whom the values will be collected
+     * @return new customer
+     */
     fun createEntity(customerDto: CustomerDto): Customer {
         return Customer(
                 customerUuid = randomUUID(),

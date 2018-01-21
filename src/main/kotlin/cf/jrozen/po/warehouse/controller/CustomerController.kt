@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.InitBinder
 
 /**
  * [CustomerController] is responsible for managing with [Customer] entity
+ * @property customerService enables customer service
+ * @property customerValidator allows customer validation
  */
 @RestController
 @RequestMapping("/customers")
