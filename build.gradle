@@ -60,6 +60,12 @@ dependencies {
     // https://mvnrepository.com/artifact/com.fasterxml.jackson.datatype/jackson-datatype-jsr310
     compile group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: '2.9.3'
 
+//    // https://mvnrepository.com/artifact/com.github.javafaker/javafaker
+//    compile group: 'com.github.javafaker', name: 'javafaker', version: '0.14'
+//    // https://mvnrepository.com/artifact/org.yaml/snakeyaml
+//    compile group: 'org.yaml', name: 'snakeyaml', version: '1.19'
+
+
     runtime('org.postgresql:postgresql')
     testCompile('org.springframework.boot:spring-boot-starter-test')
     testCompile('org.springframework.restdocs:spring-restdocs-mockmvc')

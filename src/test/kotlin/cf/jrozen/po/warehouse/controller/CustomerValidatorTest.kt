@@ -43,6 +43,22 @@ class CustomerValidatorTest {
         assertEquals(error.errorCount, 1)
     }
 
+    @Test
+    fun shouldFailWhenEmptyStings() {
+        val customer = CustomerDto()
+        customer.email = ""
+        customer.address = newAddressDto(
+                pCity = "",
+                pLocalNumber = "",
+                pStreet = "",
+                pCountry = "",
+                pZipCode = ""
+        )
+        val error = BeanPropertyBindingResult(customer, "")
+        validator.validate(customer, error)
+        assertTrue(error.hasErrors())
+    }
+
     private fun newAddressDto(
             pCity: String,
             pLocalNumber: String,

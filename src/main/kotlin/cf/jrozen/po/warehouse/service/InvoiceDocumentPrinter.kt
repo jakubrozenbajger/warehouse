@@ -8,9 +8,9 @@ import com.itextpdf.text.pdf.PdfPCell
 import com.itextpdf.text.pdf.PdfPTable
 import com.itextpdf.text.pdf.PdfWriter
 import java.io.ByteArrayOutputStream
-import java.io.FileOutputStream
-import java.io.OutputStream
 import java.util.concurrent.atomic.AtomicInteger
+import com.itextpdf.text.Paragraph
+
 
 /**
  * [InvoiceDocumentPrinter] allows to print invoice
@@ -34,32 +34,36 @@ class InvoiceDocumentPrinter(
     override fun printDocument(): ByteArrayOutputStream {
         val baos = ByteArrayOutputStream()
         val document = Document()
-        PdfWriter.getInstance(document, baos)// FileOutputStream(FILE))
+        PdfWriter.getInstance(document, baos)
 
         document.open()
         document.add(Chunk(""))
         addMetadata(document)
 
-        val font = Font(Font.FontFamily.TIMES_ROMAN, 12f,
-                Font.NORMAL, BaseColor.BLACK);
+        var catPart = Chapter(Paragraph(""), 1)
 
-        var anchor = Anchor("First Chapter", font)
-        anchor.name = "First Chapter"
-
-        // Second parameter is the number of the chapter
-        var catPart = Chapter(Paragraph(anchor), 1)
-
-        var subPara = Paragraph("Subcategory 1", font)
+        var subPara = Paragraph("Towary", font)
         var subCatPart = catPart.addSection(subPara)
         subCatPart.add(Paragraph("Hello"))
 
-        subPara = Paragraph("Subcategory 2", font)
-        subCatPart = catPart.addSection(subPara)
+        val paragraph0 = Paragraph("Faktura VAT       " + invoice.creationDate)
+        paragraph0.spacingAfter = 30f
 
-        val paragraph = Paragraph()
-        subCatPart.add(paragraph)
+        val paragraph1 = Paragraph("Sprzedawca")
+        val paragraph2 = Paragraph(invoice.sellerInfo)
+        val paragraph3 = Paragraph("zamawiajacy")
+        val paragraph4 = Paragraph(invoice.customerInfo)
+        paragraph3.spacingBefore = 20f
 
-        // add a table
+        document.add(paragraph0)
+        document.add(paragraph1)
+        document.add(paragraph2)
+        document.add(paragraph3)
+        document.add(paragraph4)
+
+        val p1= Paragraph("Towary")
+        p1.spacingBefore = 25f
+        subCatPart.add(p1)
 
 
         // order table
@@ -72,7 +76,9 @@ class InvoiceDocumentPrinter(
         val vatTable = InvoiceDocumentTemplate.vatTable()
         fillVatInfo(invoice.order, vatTable)
 
+        orderTable.spacingBefore = 20f
         subCatPart.add(orderTable)
+        vatTable.spacingBefore = 20f
         subCatPart.add(vatTable)
         document.add(subCatPart)
 
@@ -102,7 +108,7 @@ class InvoiceDocumentPrinter(
         cells.entries.forEach {
             vatTable.addCell(Phrase(it.key.taxAmount.toString(), font))
             it.value.forEach { bd ->
-                vatTable.addCell(Phrase(bd.toString(),font))
+                vatTable.addCell(Phrase(bd.toString(), font))
             }
         }
 
@@ -110,7 +116,7 @@ class InvoiceDocumentPrinter(
         vatTable.addCell(Phrase(InvoiceDocumentTemplate.SUM_CELL_NAME, font))
 
         val sum = columnSum(cells.values)//.fold(listOf(BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO), columnReduceFunction)
-        sum.forEach { vatTable.addCell(Phrase(it.toString(),font)) }
+        sum.forEach { vatTable.addCell(Phrase(it.toString(), font)) }
 
     }
 
@@ -126,7 +132,6 @@ class InvoiceDocumentPrinter(
         return listOf(
                 lp.getAndIncrement().toString(),
                 op.ware.name,
-                "szt",
                 op.amount.toString(),
                 op.ware.price.toString(),
                 op.ware.taxGroup.taxAmount.toString(),
@@ -144,7 +149,6 @@ object InvoiceDocumentTemplate {
     private val orderTableHeadersPl = listOf<String>(
             "Lp.",
             "Nazwa towaru",
-            "Jm",
             "Ilość",
             "Cena netto",
             "Stawka VAT",
@@ -188,6 +192,7 @@ object InvoiceDocumentTemplate {
         cells.forEach { it.horizontalAlignment = Element.ALIGN_CENTER }
         cells[1].horizontalAlignment = Element.ALIGN_RIGHT
         pdfPTable.headerRows = 1
+        cells.forEach { pdfPTable.addCell(it) }
         return pdfPTable
     }
 

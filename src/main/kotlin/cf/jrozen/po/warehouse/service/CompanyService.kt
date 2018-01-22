@@ -6,6 +6,6 @@ import org.springframework.stereotype.Service
 class CompanyService {
 
     fun getSellerInfo(): String {
-        return "CAdsadnj kdasnfk adsfkjas dnfkdsa asjkdnfkjan dsfkj akjsndfkjansdkj"
+        return "Hutrowania towarów Januszex \n ul. Pionierów Inżynierii Oprogramowania 21/2, \n 98-231 Gryfin, \n Polska"
     }
 }

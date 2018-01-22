@@ -42,7 +42,8 @@ class FileSystemDocumentRepository : DocumentRepository() {
     override fun getDocument(name: String): ByteArray {
         logger.info("Getting document from file system repository")
         val file = java.io.File("/tmp/$name.pdf")
-        return java.io.FileInputStream(file).readBytes()
+        return java.io.FileInputStream(file).readBytes()//readAllBytes()
+//        return java.io.FileInputStream(file).readAllBytes()
     }
 }
 
